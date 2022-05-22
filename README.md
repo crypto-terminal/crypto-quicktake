@@ -1,7 +1,7 @@
 # the Crypto Quicktake chrome extension
 
 
-## Introduction
+## :tada: Introduction
 
 - What is Crypto QuickTake? 
 	- The Crypto QuickTake is a chrome extension for cryptocurrency investors. 
