@@ -2,7 +2,7 @@
   "name": "crypto-quicktake",
   "version": "0.1.0",
   "source": "src/index.html",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "scripts": {
     "start": "parcel",
     "build": "parcel build",
