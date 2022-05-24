@@ -6,8 +6,7 @@
   "scripts": {
     "start": "parcel",
     "build": "rm -rf dist/ && parcel build",
-    "postbuild": "sh ./postbuild.sh",
-    "dist": "serve ./dist"
+    "postbuild": "sh postbuild.sh"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.1.0",

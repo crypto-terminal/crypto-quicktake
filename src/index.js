@@ -1,9 +1,10 @@
-import { createRoot } from 'react-dom/client';
+/*global chrome*/
+import { createRoot } from "react-dom/client";
 import { App } from "./App";
 import { ChakraProvider } from "@chakra-ui/react";
 
-const container = document.getElementById('app');
-const root = createRoot(container); 
+const container = document.getElementById("app");
+const root = createRoot(container);
 root.render(
   <ChakraProvider>
     <App />
