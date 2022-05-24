@@ -1,4 +1,3 @@
-/*global chrome*/
 import { createRoot } from "react-dom/client";
 import { App } from "./App";
 import { ChakraProvider } from "@chakra-ui/react";
