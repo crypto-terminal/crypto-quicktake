@@ -5,7 +5,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "start": "parcel",
-    "build": "parcel build",
+    "build": "rm -rf dist/ && parcel build",
     "postbuild": "sh ./postbuild.sh",
     "dist": "serve ./dist"
   },
