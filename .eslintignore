@@ -1,0 +1,8 @@
+dist/
+node_modules/
+public/
+
+*.scss 
+*.css
+*.svg
+*.html
