@@ -8,7 +8,7 @@ export const TopNav = () => {
       width="360px"
       paddingLeft={"10px"}
       paddingRight={"10px"}
-      justify={"space-around"}
+      justify={"space-between"}
       alignItems="center"
       boxShadow="base"
     >
