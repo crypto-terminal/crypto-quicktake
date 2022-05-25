@@ -1,5 +1,18 @@
-import { TopNav } from "./components";
+import React, { TopNav } from "./components";
+import { Route, Routes } from "react-router-dom";
+
+import { News, Home, Account, Market } from "./components";
 
 export function App() {
-  return <TopNav />;
+  return (
+    <React.Fragment>
+      <TopNav />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/news" element={<News />} />
+        <Route path="/account" element={<Account />} />
+        <Route path="/market" element={<Market />} />
+      </Routes>
+    </React.Fragment>
+  );
 }
