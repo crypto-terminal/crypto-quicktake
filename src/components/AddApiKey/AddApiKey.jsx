@@ -4,12 +4,13 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  HStack,
+  Flex,
+  Container,
 } from "@chakra-ui/react";
 
 export const AddApiKey = () => {
   return (
-    <VStack>
+    <Flex width={"360px"} height={"560px" /* 600px - 40px (TopNav) */}>
       <Menu>
         <MenuButton
           px={4}
@@ -21,15 +22,21 @@ export const AddApiKey = () => {
           _expanded={{ bg: "blue.400" }}
           _focus={{ boxShadow: "outline" }}
         >
-          File <ChevronDownIcon />
+          Select <ChevronDownIcon />
         </MenuButton>
         <MenuList>
           <MenuItem>Binance US</MenuItem>
           <MenuItem>OKCoin</MenuItem>
+          <MenuItem>Gemini</MenuItem>
+          <MenuItem>Coinbase</MenuItem>
+          <MenuItem>Kraken</MenuItem>
         </MenuList>
       </Menu>
       <Input placeholder="API key" size="md" />
       <Input placeholder="API secret" size="md" />
-    </VStack>
+      <Container width={"100%"}>
+        Please make sure the access of your API key can only read your data.
+      </Container>
+    </Flex>
   );
 };
