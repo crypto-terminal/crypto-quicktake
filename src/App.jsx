@@ -1,4 +1,5 @@
-import React, { TopNav } from "./components";
+import React from "react";
+import { TopNav } from "./components";
 import { Route, Routes } from "react-router-dom";
 
 import { News, Home, Account, Market } from "./components";

@@ -1,6 +1,25 @@
 import { Flex, Button } from "@chakra-ui/react";
 import { FaHome, FaBell, FaUserLock, FaChartLine } from "react-icons/fa";
 
+const buttons = [
+  {
+    leftIcon: FaHome,
+    text: "Home",
+  },
+  {
+    leftIcon: FaBell,
+    text: "News",
+  },
+  {
+    rightIcon: FaChartLine,
+    text: "Market",
+  },
+  {
+    rightIcon: FaUserLock,
+    text: "Account",
+  },
+];
+
 export const TopNav = () => {
   return (
     <Flex
@@ -12,39 +31,20 @@ export const TopNav = () => {
       alignItems="center"
       boxShadow="base"
     >
-      <Button
-        leftIcon={<FaHome />}
-        colorScheme="blue"
-        variant="outline"
-        size="xs"
-      >
-        Home
-      </Button>
-      <Button
-        leftIcon={<FaBell />}
-        colorScheme="blue"
-        variant="outline"
-        size="xs"
-      >
-        News
-      </Button>
-
-      <Button
-        rightIcon={<FaChartLine />}
-        colorScheme="blue"
-        variant="outline"
-        size="xs"
-      >
-        Market
-      </Button>
-      <Button
-        rightIcon={<FaUserLock />}
-        colorScheme="blue"
-        variant="outline"
-        size="xs"
-      >
-        Account
-      </Button>
+      {buttons.map((button, index) => {
+        return (
+          <Button
+            key={index}
+            leftIcon={button.leftIcon ? <button.leftIcon /> : undefined}
+            rightIcon={button.rightIcon ? <button.rightIcon /> : undefined}
+            colorScheme="blue"
+            variant="outline"
+            size="xs"
+          >
+            {button.text}
+          </Button>
+        );
+      })}
     </Flex>
   );
 };
