@@ -6,6 +6,8 @@ import {
   MenuItem,
   Flex,
   Container,
+  Heading,
+  Text,
 } from "@chakra-ui/react";
 
 export const AddApiKey = () => {
@@ -35,8 +37,14 @@ export const AddApiKey = () => {
       <Input placeholder="API key" size="md" />
       <Input placeholder="API secret" size="md" />
       <Container width={"100%"}>
-        Please make sure the access of your API key can only read your data.
+        <Heading fontSize="xl">Security Warning</Heading>
+        <Text mt={4}>
+          Please make sure the access of your API key is restricted as read-only
+          or can-read, nothing more. You should not be able to buy/sell
+          cryptocurrencies or withdraw money via your API key.
+        </Text>
       </Container>
     </Flex>
   );
 };
+ 
