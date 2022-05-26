@@ -32,6 +32,7 @@ export const AddApiKey = () => {
           <MenuItem>Gemini</MenuItem>
           <MenuItem>Coinbase</MenuItem>
           <MenuItem>Kraken</MenuItem>
+          <MenuItem>BitMart</MenuItem>
         </MenuList>
       </Menu>
       <Input placeholder="API key" size="md" />
