@@ -4,15 +4,24 @@ import { Spinner } from "@chakra-ui/react";
 
 export const Home = () => {
   const [loading, setLoading] = useState(true);
-  const [apiKySecretPairs, setApiKySecretPairs] = useState();
+  const [apiKeySecretPairs, setApiKeySecretPairs] = useState();
   useEffect(() => {
-    chrome.storage.sync.get(["apiKySecretPairs"], function (result) {
-      console.log("Value currently is " + result.apiKySecretPairs);
-    });
+    const init = async () => {
+      const result = await chrome.storage.sync.get(["apiKeySecretPairs"]);
+      if (result.apiKySecretPairs) {
+        setApiKeySecretPairs(result.apiKySecretPairs);
+      }
+
+      setLoading(false);
+
+      console.log("result.apiKeySecretPairs :>> ", result.apiKeySecretPairs);
+    };
+
+    init();
   }, []);
   return loading ? (
     <Spinner />
-  ) : apiKySecretPairs ? (
+  ) : apiKeySecretPairs?.length > 0 ? (
     <div>Home</div>
   ) : (
     <AddApiKey />
