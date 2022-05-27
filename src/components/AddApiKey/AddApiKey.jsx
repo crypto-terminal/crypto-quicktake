@@ -10,6 +10,7 @@ import {
   Heading,
   Text,
   Stack,
+  HStack,
 } from "@chakra-ui/react";
 import { FaChevronDown } from "react-icons/fa";
 import { exchanges } from "../../constants";
@@ -24,22 +25,28 @@ export const AddApiKey = () => {
       p="10px"
     >
       <Stack spacing={3}>
-        <Menu>
-          <MenuButton as={Button} rightIcon={<FaChevronDown />}>
-            Select
-          </MenuButton>
-          <MenuList>
-            {exchanges.map((ex, index) => {
-              return (
-                <MenuItem key={index} id={ex.id}>
-                  {ex.text}
-                </MenuItem>
-              );
-            })}
-          </MenuList>
-        </Menu>
+        <HStack spacing="8px">
+          <Menu>
+            <MenuButton
+              minWidth={"unset"}
+              as={Button}
+              rightIcon={<FaChevronDown />}
+            >
+              Select
+            </MenuButton>
+            <MenuList>
+              {exchanges.map((ex, index) => {
+                return (
+                  <MenuItem key={index} id={ex.id}>
+                    {ex.text}
+                  </MenuItem>
+                );
+              })}
+            </MenuList>
+          </Menu>
+          <Input isReadOnly placeholder="Exchange or Wallet" size="md" />
+        </HStack>
 
-        <Input isReadOnly placeholder="Exchange or Wallet" size="md" />
         <Input autoFocus placeholder="API key" size="md" />
         <Input placeholder="API secret" size="md" />
       </Stack>
