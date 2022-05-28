@@ -20,7 +20,7 @@ export const AddApiKey = (props) => {
   const [apiKeySecretPair, setApiKeySecretPair] = useState({});
 
   useEffect(() => {
-    // convention: start with tmp, then all lowercase component name, then, var name
+    // ! convention: start with tmp, then all lowercase component name, then, var name
     chrome.storage.sync.get(["tmp_addapikey_pair"], function (result) {
       setApiKeySecretPair(result.tmp_addapikey_pair || {});
     });
@@ -45,7 +45,15 @@ export const AddApiKey = (props) => {
     let pairs;
     const result = await chrome.storage.sync.get(["apiKeySecretPairs"]);
     if (result.apiKeySecretPairs) {
-      pairs = [...result.apiKeySecretPairs, apiKeySecretPair];
+      // prevent duplicates
+      const alreadyExistingKey = result.apiKeySecretPairs.find(
+        (pair) => pair.apiKey === apiKeySecretPair.apiKey
+      );
+      if (alreadyExistingKey) {
+        pairs = result.apiKeySecretPairs;
+      } else {
+        pairs = [...result.apiKeySecretPairs, apiKeySecretPair];
+      }
     } else {
       pairs = [apiKeySecretPair];
     }
@@ -53,6 +61,10 @@ export const AddApiKey = (props) => {
       apiKeySecretPairs: pairs,
     });
 
+    //  clean up tmp values in storage
+    await chrome.storage.sync.remove(["tmp_addapikey_pair"]);
+
+    // finally, change api pairs in parent component
     props.setApiKeySecretPairs(pairs);
   };
 
@@ -131,4 +143,4 @@ export const AddApiKey = (props) => {
       </Button>
     </Flex>
   );
-};
+};;
