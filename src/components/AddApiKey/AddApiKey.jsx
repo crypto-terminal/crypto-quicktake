@@ -20,6 +20,7 @@ export const AddApiKey = (props) => {
   const [apiKeySecretPair, setApiKeySecretPair] = useState({});
 
   useEffect(() => {
+    // convention: start with tmp, then all lowercase component name, then, var name
     chrome.storage.sync.get(["tmp_addapikey_pair"], function (result) {
       setApiKeySecretPair(result.tmp_addapikey_pair || {});
     });
