@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
   Input,
   Menu,
@@ -15,7 +16,45 @@ import {
 import { FaChevronDown } from "react-icons/fa";
 import { exchanges } from "../../constants";
 
-export const AddApiKey = () => {
+export const AddApiKey = (props) => {
+  const [apiKeySecretPair, setApiKeySecretPair] = useState({});
+
+  useEffect(() => {
+    chrome.storage.sync.get(["tmp_addapikey_pair"], function (result) {
+      setApiKeySecretPair(result.tmp_addapikey_pair || {});
+    });
+  }, []);
+
+  const handleUpdateApiKey = (kv) => {
+    const pair = {
+      ...apiKeySecretPair,
+      ...kv,
+    };
+    setApiKeySecretPair(pair);
+
+    chrome.storage.sync.set({ tmp_addapikey_pair: pair }, function () {
+      console.log("DO NOT FORGET TO DELETE TMP VALUE AFTER SUBMIT");
+    });
+  };
+
+  const handleSubmit = async () => {
+    // determine if it's empty object
+    if (JSON.stringify(apiKeySecretPair) === "{}") return;
+
+    let pairs;
+    const result = await chrome.storage.sync.get(["apiKeySecretPairs"]);
+    if (result.apiKeySecretPairs) {
+      pairs = [...result.apiKeySecretPairs, apiKeySecretPair];
+    } else {
+      pairs = [apiKeySecretPair];
+    }
+    await chrome.storage.sync.set({
+      apiKeySecretPairs: pairs,
+    });
+
+    props.setApiKeySecretPairs(pairs);
+  };
+
   return (
     <Flex
       width={"360px"}
@@ -37,18 +76,42 @@ export const AddApiKey = () => {
             <MenuList>
               {exchanges.map((ex, index) => {
                 return (
-                  <MenuItem key={index} id={ex.id}>
+                  <MenuItem
+                    key={index}
+                    id={ex.id}
+                    onClick={() => handleUpdateApiKey({ ex })}
+                  >
                     {ex.text}
                   </MenuItem>
                 );
               })}
             </MenuList>
           </Menu>
-          <Input isReadOnly placeholder="Exchange or Wallet" size="md" />
+          <Input
+            isReadOnly
+            placeholder="Exchange or Wallet"
+            size="md"
+            value={apiKeySecretPair.ex?.text || ""}
+          />
         </HStack>
 
-        <Input autoFocus placeholder="API key" size="md" />
-        <Input placeholder="API secret" size="md" />
+        <Input
+          autoFocus
+          placeholder="API key"
+          size="md"
+          value={apiKeySecretPair.apiKey || ""}
+          onChange={(evt) =>
+            handleUpdateApiKey({ apiKey: evt.target.value.trim() })
+          }
+        />
+        <Input
+          placeholder="API secret"
+          size="md"
+          value={apiKeySecretPair.apiSecret || ""}
+          onChange={(evt) =>
+            handleUpdateApiKey({ apiSecret: evt.target.value.trim() })
+          }
+        />
       </Stack>
 
       <Box mt={3} p={5} shadow="md" borderWidth="1px">
@@ -62,7 +125,9 @@ export const AddApiKey = () => {
           via your API key.
         </Text>
       </Box>
+      <Button mt={3} colorScheme="blue" onClick={handleSubmit}>
+        Submit
+      </Button>
     </Flex>
   );
 };
- 

@@ -9,12 +9,10 @@ export const Home = () => {
     const init = async () => {
       const result = await chrome.storage.sync.get(["apiKeySecretPairs"]);
       if (result.apiKySecretPairs) {
-        setApiKeySecretPairs(result.apiKySecretPairs);
+        setApiKeySecretPairs(result.apiKeySecretPairs);
       }
 
       setLoading(false);
-
-      console.log("result.apiKeySecretPairs :>> ", result.apiKeySecretPairs);
     };
 
     init();
@@ -24,6 +22,6 @@ export const Home = () => {
   ) : apiKeySecretPairs?.length > 0 ? (
     <div>Home</div>
   ) : (
-    <AddApiKey />
+    <AddApiKey setApiKeySecretPairs={setApiKeySecretPairs} />
   );
 };
