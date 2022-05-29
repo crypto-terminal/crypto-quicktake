@@ -22,10 +22,10 @@
 - If you have a Binance account, the `API restrictions` in the `API management` section should check `can read` only !! 
 - I will never send you emails, text messages or anything unless you send me first. My email is eXVtaW5jb2luQGdtYWlsLmNvbQo=
 
-## :coffee: Thanks for support
+## :coffee: Thank you for the support
 
 - Bitcoin: 1Mq8Cqxs6bKMtdeaeneUKnUyfi1BqzMzQT
-- Solana: FAnqn2brg3iaVpZxEB4dBcACkzD7kvDi4LMHLGjAbC2p
 - ETH: 0x44c3c1ca63e9f306fed103de11fc4b0a0c0dbbf1
+- Solana: FAnqn2brg3iaVpZxEB4dBcACkzD7kvDi4LMHLGjAbC2p
 - Doge: DMzUv7jsWcqXMoe8U3weNoGZx4Q9gx13BL
 - USD: https://www.buymeacoffee.com/cryptoterminal
