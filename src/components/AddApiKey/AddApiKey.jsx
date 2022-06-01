@@ -40,7 +40,19 @@ export const AddApiKey = (props) => {
 
   const handleSubmit = async () => {
     // determine if it's empty object
-    if (JSON.stringify(apiKeySecretPair) === "{}") return;
+    if (JSON.stringify(apiKeySecretPair) === "{}") {
+      alert("Please enter your API key");
+      return;
+    }
+
+    if (
+      !apiKeySecretPair.apiKey ||
+      !apiKeySecretPair.apiSecret ||
+      !apiKeySecretPair.ex
+    ) {
+      alert("Please fill all fields");
+      return;
+    }
 
     let pairs;
     const result = await chrome.storage.sync.get(["apiKeySecretPairs"]);
@@ -50,7 +62,7 @@ export const AddApiKey = (props) => {
         (pair) => pair.apiKey === apiKeySecretPair.apiKey
       );
       if (alreadyExistingKey) {
-        pairs = result.apiKeySecretPairs;
+        alert("API key already exists");
       } else {
         pairs = [...result.apiKeySecretPairs, apiKeySecretPair];
       }
