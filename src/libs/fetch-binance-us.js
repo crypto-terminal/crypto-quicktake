@@ -1,38 +1,22 @@
-import cryptoJs from "crypto-js";
-
-const BASE_URL = "https://api.binance.us";
-
-const ENDPOINTS = {
-  USER_ACCOUNT: "/api/v3/account",
-  USER_STATUS: "/wapi/v3/accountStatus.html",
-};
-
-const getSignature = (API_SECRET, timestamp) =>
-  cryptoJs.HmacSHA256(
-    new URLSearchParams({ timestamp }).toString(),
-    API_SECRET
-  );
-
-const getQuery = (signature, timestamp) =>
-  new URLSearchParams({ timestamp, signature }).toString();
+const BASE_URL =
+  "https://crypto-quicktake-lambda.netlify.app/.netlify/functions";
 
 export const fetchBinanceUsAccount = async ({ pair }) => {
-  const timestamp = Date.now();
-  const API_KEY = pair.apiKey;
-  const API_SECRET = pair.apiSecret;
-  const signature = getSignature(API_SECRET, timestamp);
-  const query = getQuery(signature, timestamp);
-
-  const response = await fetch(
-    `${BASE_URL}${ENDPOINTS.USER_ACCOUNT}?${query}`,
-    {
-      method: "GET",
+  try {
+    const response = await fetch(`${BASE_URL}/binance_us`, {
+      method: "POST",
       headers: {
-        "X-MBX-APIKEY": API_KEY,
+        "Content-Type": "text/plain; charset=utf-8", // ! important
       },
-    }
-  );
-  const json = await response.json();
+      body: JSON.stringify({ pair }),
+    });
+
+    const json = await response.json();
+    return json.data;
+  } catch (err) {
+    return { error: err };
+  }
+
   // {
   //     makerCommission: 10,
   //     takerCommission: 10,
@@ -51,5 +35,4 @@ export const fetchBinanceUsAccount = async ({ pair }) => {
   //     ],
   //     permissions: [ 'SPOT' ]
   // }
-  return json;
 };

@@ -35,7 +35,8 @@ export const Home = () => {
     const sendRequest = async () => {
       setLoading(true);
       const request = requests[pair.ex.id]["account"];
-      const json = await request({ pair });
+      const data = await request({ pair });
+      console.log("data :>> ", data);
       setLoading(false);
     };
 
