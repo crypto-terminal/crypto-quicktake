@@ -18,8 +18,8 @@ export const Home = () => {
 
   useEffect(() => {
     const init = async () => {
+      setLoading(true);
       try {
-        setLoading(true);
         // First, get account api key secret pairs
         const result = await chrome.storage.sync.get(["apiKeySecretPairs"]);
         if (
