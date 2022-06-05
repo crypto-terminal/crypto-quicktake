@@ -18,19 +18,27 @@ export const Home = () => {
 
   useEffect(() => {
     const init = async () => {
-      setLoading(true);
-      // First, get account api key secret pairs
-      const result = await chrome.storage.sync.get(["apiKeySecretPairs"]);
-      if (!result.apiKeySecretPairs || result.apiKeySecretPairs.length === 0) {
-        return;
-      }
-      setApiKeySecretPairs(result.apiKeySecretPairs);
+      try {
+        setLoading(true);
+        // First, get account api key secret pairs
+        const result = await chrome.storage.sync.get(["apiKeySecretPairs"]);
+        if (
+          !result.apiKeySecretPairs ||
+          result.apiKeySecretPairs.length === 0
+        ) {
+          return;
+        }
+        setApiKeySecretPairs(result.apiKeySecretPairs);
 
-      // always fetch the first account
-      const pair = result.apiKeySecretPairs[0];
-      const request = requests[pair.ex.id]["account"];
-      const accountInfo = await request({ pair });
-      setCurrentAccount(accountInfo);
+        // always fetch the first account
+        const pair = result.apiKeySecretPairs[0];
+        const request = requests[pair.ex.id]["account"];
+        const accountInfo = await request({ pair });
+        setCurrentAccount(accountInfo);
+      } catch (error) {
+        // !TODO: handle error
+        console.log("error :>> ", error);
+      }
 
       setLoading(false);
     };

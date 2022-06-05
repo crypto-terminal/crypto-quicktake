@@ -2,20 +2,18 @@ const BASE_URL =
   "https://crypto-quicktake-lambda.netlify.app/.netlify/functions";
 
 export const fetchBinanceUsAccount = async ({ pair }) => {
-  try {
-    const response = await fetch(`${BASE_URL}/binance_us`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "text/plain; charset=utf-8", // ! important
-      },
-      body: JSON.stringify({ pair }),
-    });
+  
+  const response = await fetch(`${BASE_URL}/binance_us`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8", // ! important
+    },
+    body: JSON.stringify({ pair }),
+  });
 
-    const json = await response.json();
-    return json.data;
-  } catch (err) {
-    return { error: err };
-  }
+  const json = await response.json();
+  return json.data;
+
 
   // {
   //     makerCommission: 10,
