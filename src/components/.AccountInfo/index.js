@@ -1,2 +1,1 @@
-export { TotalBalance } from "./TotalBalance";
-export { CoinList } from "./CoinList";
+export * from "./AccountInfo";
