@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Spinner } from "@chakra-ui/react";
+import React, { useState, useEffect, useCallback } from "react";
+import { Stack, Spinner, Button, Flex } from "@chakra-ui/react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { AddApiKey } from "../.AddApiKey";
 import { fetchBinanceUsAccount } from "../../libs";
 import { AccountInfo } from "../.AccountInfo";
@@ -14,7 +15,7 @@ export const Home = () => {
   const [loading, setLoading] = useState(true);
   const [apiKeySecretPairs, setApiKeySecretPairs] = useState();
   const [currentAccount, setCurrentAccount] = useState();
-  const [currentAccountIndex, setCurrentAccountIndex] = useState();
+  const [currentPairIndex, setCurrentPairIndex] = useState(0);
 
   useEffect(() => {
     const init = async () => {
@@ -29,12 +30,6 @@ export const Home = () => {
           return;
         }
         setApiKeySecretPairs(result.apiKeySecretPairs);
-
-        // always fetch the first account
-        const pair = result.apiKeySecretPairs[0];
-        const request = requests[pair.ex.id].account;
-        const accountInfo = await request({ pair });
-        setCurrentAccount(accountInfo);
       } catch (error) {
         // !TODO: handle error
         console.error("error :>> ", error);
@@ -46,9 +41,60 @@ export const Home = () => {
     init();
   }, []);
 
+  useEffect(() => {
+    const fetchAccount = async () => {
+      if (!apiKeySecretPairs) return;
+      setLoading(true);
+      const pair = apiKeySecretPairs[currentPairIndex];
+      const request = requests[pair.ex.id].account;
+      const accountInfo = await request({ pair });
+      setCurrentAccount(accountInfo);
+      setLoading(false);
+    };
+
+    fetchAccount();
+  }, [currentPairIndex, apiKeySecretPairs]);
+
+  const handleGoPrevAccount = useCallback(() => {
+    if (apiKeySecretPairs && apiKeySecretPairs.length > 1) {
+      setCurrentPairIndex(
+        (i) => (i + apiKeySecretPairs.length - 1) % apiKeySecretPairs.length
+      );
+    }
+  }, [apiKeySecretPairs, setCurrentPairIndex]);
+
+  const handleGoNextAccount = useCallback(() => {
+    if (apiKeySecretPairs && apiKeySecretPairs.length > 1) {
+      setCurrentPairIndex((i) => (i + 1) % apiKeySecretPairs.length);
+    }
+  }, [apiKeySecretPairs, setCurrentPairIndex]);
+
   if (loading) return <Spinner />;
 
-  if (currentAccount) return <AccountInfo currentAccount={currentAccount} />;
+  if (currentAccount)
+    return (
+      <React.Fragment>
+        <AccountInfo currentAccount={currentAccount} />
+        <Flex align="center" justify="center" mt="10px">
+          <Stack spacing={8} direction="row">
+            <Button
+              leftIcon={<FaChevronLeft />}
+              colorScheme="blue"
+              onClick={handleGoPrevAccount}
+            >
+              Prev
+            </Button>
+            <Button
+              rightIcon={<FaChevronRight />}
+              colorScheme="blue"
+              onClick={handleGoNextAccount}
+            >
+              Next
+            </Button>
+          </Stack>
+        </Flex>
+      </React.Fragment>
+    );
 
   if (!apiKeySecretPairs)
     return <AddApiKey setApiKeySecretPairs={setApiKeySecretPairs} />;

@@ -24,5 +24,7 @@ module.exports = {
         unnamedComponents: "arrow-function",
       },
     ],
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-fragments": "off",
   },
 };

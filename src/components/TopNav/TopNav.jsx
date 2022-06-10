@@ -31,27 +31,25 @@ export const TopNav = () => {
     <Flex
       height="40px"
       width="360px"
-      paddingLeft={"10px"}
-      paddingRight={"10px"}
-      justify={"space-between"}
+      paddingLeft="10px"
+      paddingRight="10px"
+      justify="space-between"
       alignItems="center"
       boxShadow="base"
     >
-      {buttons.map((button, index) => {
-        return (
-          <Button
-            key={index}
-            leftIcon={button.leftIcon ? <button.leftIcon /> : undefined}
-            rightIcon={button.rightIcon ? <button.rightIcon /> : undefined}
-            colorScheme="blue"
-            variant="outline"
-            size="xs"
-            onClick={() => navigate(button.route)}
-          >
-            {button.text}
-          </Button>
-        );
-      })}
+      {buttons.map((button) => (
+        <Button
+          key={button.text}
+          leftIcon={button.leftIcon ? <button.leftIcon /> : undefined}
+          rightIcon={button.rightIcon ? <button.rightIcon /> : undefined}
+          colorScheme="blue"
+          variant="outline"
+          size="xs"
+          onClick={() => navigate(button.route)}
+        >
+          {button.text}
+        </Button>
+      ))}
     </Flex>
   );
 };

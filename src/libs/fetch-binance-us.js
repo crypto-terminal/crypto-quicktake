@@ -1,5 +1,5 @@
-const BASE_URL = "http://localhost:8888/.netlify/functions";
-// "https://crypto-quicktake-lambda.netlify.app/.netlify/functions";
+const BASE_URL = // "http://localhost:8888/.netlify/functions";
+  "https://crypto-quicktake-lambda.netlify.app/.netlify/functions";
 
 export const fetchBinanceUsAccount = async ({ pair }) => {
   const response = await fetch(`${BASE_URL}/binance_us`, {
