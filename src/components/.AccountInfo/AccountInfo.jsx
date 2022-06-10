@@ -9,6 +9,9 @@ import {
 } from "@chakra-ui/react";
 import VirtualList from "rc-virtual-list";
 
+
+// !TODO: refactor this to accommodate multiple accounts
+// and we need to define currentAccount schema
 export const AccountInfo = ({ currentAccount }) => {
   const date = useMemo(() => {
     const d = new Date(currentAccount.accountInfo.updateTime);
