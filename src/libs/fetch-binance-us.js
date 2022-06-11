@@ -11,8 +11,9 @@ export const fetchBinanceUsAccount = async ({ pair }) => {
   });
 
   const json = await response.json();
-  return json.data; // { accountInfo }
-};;
+  return json.data; // { accountInfo: { balances }, totalBalance: number }
+};
+
 // accountInfo :
 // {
 //     makerCommission: 10,

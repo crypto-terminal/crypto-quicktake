@@ -13,7 +13,7 @@ import VirtualList from "rc-virtual-list";
 // !TODO: refactor this to accommodate multiple accounts
 // and we need to define currentAccount schema
 export const AccountInfo = ({ currentAccount }) => {
-  const { accountInfo } = currentAccount;
+  const { accountInfo, totalBalance } = currentAccount;
 
   const date = useMemo(() => {
     const d = new Date(accountInfo.updateTime);
@@ -31,7 +31,7 @@ export const AccountInfo = ({ currentAccount }) => {
             Total Balance
           </Flex>
         </StatLabel>
-        <StatNumber>£0.00</StatNumber>
+        <StatNumber>${totalBalance}</StatNumber>
         <StatHelpText>{date}</StatHelpText>
       </Stat>
       <HStack
@@ -44,15 +44,15 @@ export const AccountInfo = ({ currentAccount }) => {
         <Flex justify="center" width="50px" fontSize="14px" fontWeight={600}>
           Coin
         </Flex>
-        <Flex justify="flex-end" width="100px" fontSize="14px" fontWeight={600}>
+        <Flex justify="flex-end" width="145px" fontSize="14px" fontWeight={600}>
           Balance
         </Flex>
-        <Flex justify="flex-end" width="100px" fontSize="14px" fontWeight={600}>
+        <Flex justify="flex-end" width="145px" fontSize="14px" fontWeight={600}>
           USD
         </Flex>
-        <Flex justify="flex-end" width="90px" fontSize="14px" fontWeight={600}>
+        {/* <Flex justify="flex-end" width="90px" fontSize="14px" fontWeight={600}>
           Locked
-        </Flex>
+        </Flex> */}
       </HStack>
       <VirtualList
         data={accountInfo.balances}
@@ -75,17 +75,17 @@ export const AccountInfo = ({ currentAccount }) => {
                 fontSize="14px"
                 fontWeight={600}
               >
-                {coinBalance.asset}
+                {coinBalance.coinSymbol}
               </Flex>
-              <Flex width="100px" justify="flex-end">
-                {coinBalance.free}
+              <Flex width="145px" justify="flex-end">
+                {coinBalance.coinAmount}
               </Flex>
-              <Flex width="100px" justify="flex-end">
-                {coinBalance.value}
+              <Flex width="145px" justify="flex-end">
+                {coinBalance.fiatValue}
               </Flex>
-              <Flex width="90px" justify="flex-end">
+              {/* <Flex width="90px" justify="flex-end">
                 {coinBalance.locked}
-              </Flex>
+              </Flex> */}
             </HStack>
           );
         }}
