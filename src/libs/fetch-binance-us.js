@@ -11,8 +11,8 @@ export const fetchBinanceUsAccount = async ({ pair }) => {
   });
 
   const json = await response.json();
-  return json.data; // { accountInfo, coinPrices }
-};
+  return json.data; // { accountInfo }
+};;
 // accountInfo :
 // {
 //     makerCommission: 10,

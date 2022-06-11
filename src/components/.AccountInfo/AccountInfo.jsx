@@ -9,35 +9,16 @@ import {
   Badge,
 } from "@chakra-ui/react";
 import VirtualList from "rc-virtual-list";
-import Decimal from "decimal.js";
 
 // !TODO: refactor this to accommodate multiple accounts
 // and we need to define currentAccount schema
 export const AccountInfo = ({ currentAccount }) => {
-  const { accountInfo, coinPrices } = currentAccount;
+  const { accountInfo } = currentAccount;
 
   const date = useMemo(() => {
     const d = new Date(accountInfo.updateTime);
     return `${d.toDateString()} ${d.toLocaleTimeString()}`;
   }, []);
-
-  const virtualListData = useMemo(() => {
-    const nonZeroBalances = accountInfo.balances.filter(
-      (balance) => parseInt(balance.free) > 0
-    );
-
-    const balances = nonZeroBalances.map((balance) => {
-      let price = coinPrices.find(
-        (p) => p.symbol === `${balance.asset}USD`
-      ).price;
-      price = price || "0";
-      return {
-        ...balance,
-        price,
-      };
-    });
-    return balances;
-  }, [currentAccount]);
 
   return (
     <React.Fragment>
@@ -63,20 +44,23 @@ export const AccountInfo = ({ currentAccount }) => {
         <Flex justify="center" width="50px" fontSize="14px" fontWeight={600}>
           Coin
         </Flex>
-        <Flex justify="flex-end" width="145px" fontSize="14px" fontWeight={600}>
+        <Flex justify="flex-end" width="100px" fontSize="14px" fontWeight={600}>
           Balance
         </Flex>
-        <Flex justify="flex-end" width="145px" fontSize="14px" fontWeight={600}>
+        <Flex justify="flex-end" width="100px" fontSize="14px" fontWeight={600}>
           USD
+        </Flex>
+        <Flex justify="flex-end" width="90px" fontSize="14px" fontWeight={600}>
+          Locked
         </Flex>
       </HStack>
       <VirtualList
-        data={virtualListData}
+        data={accountInfo.balances}
         height={367}
         itemHeight={30}
         itemKey="id"
       >
-        {(coinBalace, index) => {
+        {(coinBalance, index) => {
           return (
             <HStack
               height="40px"
@@ -91,15 +75,16 @@ export const AccountInfo = ({ currentAccount }) => {
                 fontSize="14px"
                 fontWeight={600}
               >
-                {coinBalace.asset}
+                {coinBalance.asset}
               </Flex>
-              <Flex width="145px" justify="flex-end">
-                {coinBalace.free}
+              <Flex width="100px" justify="flex-end">
+                {coinBalance.free}
               </Flex>
-              <Flex width="145px" justify="flex-end">
-                {new Decimal(coinBalace.price)
-                  .times(coinBalace.free)
-                  .toFixed(2)}
+              <Flex width="100px" justify="flex-end">
+                {coinBalance.value}
+              </Flex>
+              <Flex width="90px" justify="flex-end">
+                {coinBalance.locked}
               </Flex>
             </HStack>
           );

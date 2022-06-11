@@ -75,7 +75,7 @@ export const Home = () => {
     return (
       <React.Fragment>
         <AccountInfo currentAccount={currentAccount} />
-        <Flex align="center" justify="center" mt="10px">
+        <Flex align="center" justify="center" height="60px">
           <Stack spacing={8} direction="row">
             <Button
               leftIcon={<FaChevronLeft />}
