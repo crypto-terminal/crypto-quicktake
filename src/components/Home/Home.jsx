@@ -2,14 +2,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Stack, Spinner, Button, Flex } from "@chakra-ui/react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { AddApiKey } from "../.AddApiKey";
-import { fetchBinanceUsAccount } from "../../libs";
+import { fetchAll } from "../../libs";
 import { AccountInfo } from "../.AccountInfo";
-
-const requests = {
-  binance_us: {
-    account: fetchBinanceUsAccount,
-  },
-};
 
 export const Home = () => {
   const [loading, setLoading] = useState(true);
@@ -46,8 +40,10 @@ export const Home = () => {
       if (!apiKeySecretPairs) return;
       setLoading(true);
       const pair = apiKeySecretPairs[currentPairIndex];
-      const request = requests[pair.ex.id].account;
+
+      const request = fetchAll[pair.ex.id].account;
       const accountInfo = await request({ pair });
+
       setCurrentAccount(accountInfo);
       setLoading(false);
     };
