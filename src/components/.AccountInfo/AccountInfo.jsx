@@ -50,9 +50,6 @@ export const AccountInfo = ({ currentAccount }) => {
         <Flex justify="flex-end" width="145px" fontSize="14px" fontWeight={600}>
           USD
         </Flex>
-        {/* <Flex justify="flex-end" width="90px" fontSize="14px" fontWeight={600}>
-          Locked
-        </Flex> */}
       </HStack>
       <VirtualList
         data={accountInfo.balances}
@@ -83,9 +80,6 @@ export const AccountInfo = ({ currentAccount }) => {
               <Flex width="145px" justify="flex-end">
                 {coinBalance.fiatValue}
               </Flex>
-              {/* <Flex width="90px" justify="flex-end">
-                {coinBalance.locked}
-              </Flex> */}
             </HStack>
           );
         }}

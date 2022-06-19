@@ -27,4 +27,8 @@ export const exchanges = [
     id: "bitmart",
     text: "BitMart",
   },
+  {
+    id: "kucoin",
+    text: "KuCoin",
+  },
 ];
