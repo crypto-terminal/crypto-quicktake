@@ -44,7 +44,7 @@ const ApiItem = ({ pair }) => {
     <ListItem>
       <HStack spacing={1}>
         <ListIcon as={FaCog} color="green.500" />
-        <Text fontWeight={700}>{pair.ex.text}</Text>
+        <Text fontWeight={700}>{pair.ex.text}: &nbsp;</Text>
         <Text maxWidth="120px" noOfLines={1}>
           <Tooltip hasArrow placement="top" label={pair.apiKey}>
             {trucatedApiKey}

@@ -13,8 +13,7 @@ import VirtualList from "rc-virtual-list";
 // !TODO: refactor this to accommodate multiple accounts
 // and we need to define currentAccount schema
 export const AccountInfo = ({ currentAccount }) => {
-  const { accountInfo, totalBalance } = currentAccount;
-
+  const { accountInfo, totalBalance, currentApiPair } = currentAccount;
   const date = useMemo(() => {
     const d = new Date(accountInfo.updateTime);
     return `${d.toDateString()} ${d.toLocaleTimeString()}`;
@@ -26,7 +25,7 @@ export const AccountInfo = ({ currentAccount }) => {
         <StatLabel>
           <Flex height="24px" align="center">
             <Badge variant="outline" colorScheme="green">
-              Binance US
+              {currentApiPair.ex.text}
             </Badge>
             Total Balance
           </Flex>

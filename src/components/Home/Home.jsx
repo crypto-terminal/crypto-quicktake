@@ -44,7 +44,7 @@ export const Home = () => {
       const request = fetchAll[pair.ex.id].account;
       const accountInfo = await request({ pair });
 
-      setCurrentAccount(accountInfo);
+      setCurrentAccount({ ...accountInfo, currentApiPair: pair });
       setLoading(false);
     };
 
