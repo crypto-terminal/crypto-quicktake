@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Flex } from "@chakra-ui/react";
 import { ApiKeySecretPairList } from "./ApiKeySecretPairList";
+import { AccountFooter } from "./AccountFooter";
 
 export const Account = () => {
   const [pairs, setPairs] = useState();
@@ -16,8 +18,18 @@ export const Account = () => {
     init();
   }, []);
 
-  if (pairs) {
-    return <ApiKeySecretPairList pairs={pairs} />;
-  }
-  return null;
+  return (
+    <Flex
+      height="560px"
+      width="360px"
+      paddingLeft="10px"
+      paddingRight="10px"
+      flexDirection="column"
+      justifyContent="flex-end"
+      alignItems="center"
+    >
+      {pairs && <ApiKeySecretPairList pairs={pairs} />}
+      <AccountFooter />
+    </Flex>
+  );
 };

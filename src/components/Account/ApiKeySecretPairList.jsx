@@ -9,12 +9,13 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import { FaCog } from "react-icons/fa";
+import { DragDropContext } from "react-beautiful-dnd";
 
 export const ApiKeySecretPairList = ({ pairs }) => {
   const isMainAccount = useCallback(() => {}, []);
 
   return (
-    <List spacing={3}>
+    <List spacing={3} width="100%">
       {pairs.map((pair) => (
         <ApiItem pair={pair} key={pair.apiKey} />
       ))}
@@ -41,8 +42,8 @@ const ApiItem = ({ pair }) => {
     return `${pair.apiKey.slice(0, 6)}...${pair.apiKey.slice(l - 5)}`;
   }, []);
   return (
-    <ListItem>
-      <HStack spacing={1}>
+    <ListItem height="520px" width="100%">
+      <HStack spacing={1} width="100%">
         <ListIcon as={FaCog} color="green.500" />
         <Text fontWeight={700}>{pair.ex.text}: &nbsp;</Text>
         <Text maxWidth="120px" noOfLines={1}>
