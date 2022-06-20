@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
   Button,
@@ -36,7 +36,6 @@ export const AccountFooter = () => {
     onClose: onBulkAddClose,
   } = useDisclosure();
 
-  const handleAddOne = useCallback(() => {}, []);
   return (
     <React.Fragment>
       <Flex
@@ -66,17 +65,41 @@ export const AccountFooter = () => {
           Bulk Add
         </Button>
       </Flex>
-      <AddModal
-        isAddOpen={isAddOpen}
-        onAddClose={onAddClose}
-        handleAdd={handleAdd}
-      />
+      <AddModal isAddOpen={isAddOpen} onAddClose={onAddClose} />
     </React.Fragment>
   );
 };
 
 const AddModal = (props) => {
-  const { isAddOpen, onAddClose, handleAdd } = props;
+  const { isAddOpen, onAddClose } = props;
+  const [input, setInput] = useState({});
+  const inputRef = useRef();
+
+  useEffect(() => {
+    inputRef.current = JSON.parse(JSON.stringify(input));
+  }, [input]);
+
+  const handleUpdateApiKey = (_input) => {
+    setInput({
+      ...input,
+      ..._input,
+    });
+  };
+
+  const handleAdd = useCallback(async () => {
+    if (!input.apiKey || !input.apiSecret || !input.ex) {
+      alert("Please fill all fields"); // eslint-disable-line no-alert
+      return;
+    }
+    // get the current key/secret pairs from chrome storage
+
+    // add the key/secret pair
+
+    // update the key/secret pairs in the chrome storage
+
+    onAddClose();
+  }, [onAddClose, inputRef]);
+
   return (
     <Modal isOpen={isAddOpen} onClose={onAddClose}>
       <ModalOverlay />
@@ -95,22 +118,43 @@ const AddModal = (props) => {
               </MenuButton>
               <MenuList>
                 {exchanges.map((ex) => (
-                  <MenuItem key={ex.id} id={ex.id}>
+                  <MenuItem
+                    key={ex.id}
+                    id={ex.id}
+                    onClick={() => handleUpdateApiKey({ ex })}
+                  >
                     {ex.text}
                   </MenuItem>
                 ))}
               </MenuList>
             </Menu>
-            <Input isReadOnly placeholder="Exchange or Wallet" size="md" />
+            <Input
+              isReadOnly
+              placeholder="Exchange or Wallet"
+              size="md"
+              value={input.ex?.text || ""}
+            />
           </HStack>
-          <FormControl>
+          <FormControl mt={2}>
             <FormLabel>API Key</FormLabel>
-            <Input placeholder="API Key" />
+            <Input
+              placeholder="API Key"
+              value={input.current?.apiKey || ""}
+              onChange={(evt) =>
+                handleUpdateApiKey({ apiKey: evt.target.value.trim() })
+              }
+            />
           </FormControl>
 
-          <FormControl mt={4}>
+          <FormControl mt={2}>
             <FormLabel>API secret</FormLabel>
-            <Input placeholder="API secret" />
+            <Input
+              placeholder="API secret"
+              value={inputRef?.current?.apiSecret || ""}
+              onChange={(evt) =>
+                handleUpdateApiKey({ apiSecret: evt.target.value.trim() })
+              }
+            />
           </FormControl>
         </ModalBody>
 
@@ -128,7 +172,6 @@ const AddModal = (props) => {
 AddModal.propTypes = {
   isAddOpen: PropTypes.func.isRequired,
   onAddClose: PropTypes.func.isRequired,
-  handleAdd: PropTypes.func.isRequired,
 };
 
 const BulkAddModal = () => {
