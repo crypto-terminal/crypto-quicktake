@@ -9,7 +9,6 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import { FaCog } from "react-icons/fa";
-import { DragDropContext } from "react-beautiful-dnd";
 
 export const ApiKeySecretPairList = ({ pairs }) => {
   const isMainAccount = useCallback(() => {}, []);
