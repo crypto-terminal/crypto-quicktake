@@ -23,17 +23,19 @@ import {
 import { FaUserPlus, FaFileExcel, FaChevronDown } from "react-icons/fa";
 import { exchanges } from "../../constants";
 
+const DEFAULT_INPUT = {};
+
 export const AccountFooter = () => {
   const {
     isOpen: isAddOpen,
     onOpen: onAddOpen,
-    onClose: onAddClose,
+    onClose: onAddClose
   } = useDisclosure();
 
   const {
     isOpen: isBulkAddOpen,
     onOpen: onBulkAddOpen,
-    onClose: onBulkAddClose,
+    onClose: onBulkAddClose
   } = useDisclosure();
 
   return (
@@ -72,33 +74,47 @@ export const AccountFooter = () => {
 
 const AddModal = (props) => {
   const { isAddOpen, onAddClose } = props;
-  const [input, setInput] = useState({});
+  const [input, setInput] = useState(DEFAULT_INPUT);
   const inputRef = useRef();
 
   useEffect(() => {
     inputRef.current = JSON.parse(JSON.stringify(input));
   }, [input]);
 
-  const handleUpdateApiKey = (_input) => {
-    setInput({
-      ...input,
-      ..._input,
-    });
-  };
+  const handleUpdatePair = useCallback(
+    (evt) => {
+      const key = evt.target.name;
+      const value =
+        typeof evt.target.value === "string"
+          ? evt.target.value.trim()
+          : evt.target.value;
+      setInput((_input) => ({
+        ..._input,
+        [key]: value
+      }));
+    },
+    [setInput]
+  );
 
   const handleAdd = useCallback(async () => {
-    if (!input.apiKey || !input.apiSecret || !input.ex) {
+    if (
+      !inputRef?.current?.apiKey ||
+      !inputRef?.current?.apiSecret ||
+      !inputRef?.current?.ex
+    ) {
       alert("Please fill all fields"); // eslint-disable-line no-alert
       return;
     }
+    // console.log(inputRef?.current);
     // get the current key/secret pairs from chrome storage
 
     // add the key/secret pair
 
     // update the key/secret pairs in the chrome storage
 
+    setInput(DEFAULT_INPUT);
     onAddClose();
-  }, [onAddClose, inputRef]);
+  }, [onAddClose, inputRef, setInput]);
 
   return (
     <Modal isOpen={isAddOpen} onClose={onAddClose}>
@@ -113,6 +129,7 @@ const AddModal = (props) => {
                 minWidth="unset"
                 as={Button}
                 rightIcon={<FaChevronDown />}
+                _hover={{ bg: "gray.400" }}
               >
                 Select
               </MenuButton>
@@ -121,7 +138,14 @@ const AddModal = (props) => {
                   <MenuItem
                     key={ex.id}
                     id={ex.id}
-                    onClick={() => handleUpdateApiKey({ ex })}
+                    onClick={() =>
+                      handleUpdatePair({
+                        target: {
+                          name: "ex",
+                          value: ex
+                        }
+                      })
+                    }
                   >
                     {ex.text}
                   </MenuItem>
@@ -139,10 +163,9 @@ const AddModal = (props) => {
             <FormLabel>API Key</FormLabel>
             <Input
               placeholder="API Key"
-              value={input.current?.apiKey || ""}
-              onChange={(evt) =>
-                handleUpdateApiKey({ apiKey: evt.target.value.trim() })
-              }
+              value={input.apiKey || ""}
+              name="apiKey"
+              onChange={handleUpdatePair}
             />
           </FormControl>
 
@@ -150,10 +173,9 @@ const AddModal = (props) => {
             <FormLabel>API secret</FormLabel>
             <Input
               placeholder="API secret"
-              value={inputRef?.current?.apiSecret || ""}
-              onChange={(evt) =>
-                handleUpdateApiKey({ apiSecret: evt.target.value.trim() })
-              }
+              value={input.apiSecret || ""}
+              name="apiSecret"
+              onChange={handleUpdatePair}
             />
           </FormControl>
         </ModalBody>
@@ -167,7 +189,7 @@ const AddModal = (props) => {
       </ModalContent>
     </Modal>
   );
-};
+};;;
 
 AddModal.propTypes = {
   isAddOpen: PropTypes.func.isRequired,
