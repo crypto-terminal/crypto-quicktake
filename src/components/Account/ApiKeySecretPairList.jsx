@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import {
   List,
@@ -12,11 +12,21 @@ import {
 import { FaCog } from "react-icons/fa";
 
 export const ApiKeySecretPairList = ({ pairs }) => {
-  const isMainAccount = useCallback(() => {}, []);
+  const _pairs = useMemo(() => {
+    return pairs.map((pair, index) => {
+      const first5 = pair.apiKey.slice(0, 5);
+      const last5 = pair.apiKey.slice(pair.apiKey.length - 5);
+      return {
+        ...pair,
+        trucatedApiKey: `${first5}...${last5}`,
+        isMain: index === 0
+      };
+    });
+  }, []);
 
   return (
     <List width="100%" height="520px">
-      {pairs.map((pair) => (
+      {_pairs.map((pair) => (
         <ApiItem pair={pair} key={pair.apiKey} />
       ))}
     </List>
@@ -37,25 +47,21 @@ ApiKeySecretPairList.propTypes = {
 };
 
 const ApiItem = ({ pair }) => {
-  const trucatedApiKey = useMemo(() => {
-    const l = pair.apiKey.length;
-    return `${pair.apiKey.slice(0, 6)}...${pair.apiKey.slice(l - 5)}`;
-  }, []);
-
+  const { ex, apiKey, trucatedApiKey, isMain } = pair;
   return (
     <ListItem width="100%" mt={3}>
       <HStack spacing={1} width="100%">
         <ListIcon as={FaCog} color="green.500" />
         <Text fontWeight={700} minWidth="80px">
-          {pair.ex.text}:
+          {ex.text}:
         </Text>
         <Text w="80px" noOfLines={1}>
-          <Tooltip hasArrow placement="top" label={pair.apiKey}>
+          <Tooltip hasArrow placement="top" label={apiKey}>
             {trucatedApiKey /** fixed width */}
           </Tooltip>
         </Text>
 
-        <Badge variant="outline" colorScheme="green">
+        <Badge variant="outline" colorScheme={isMain ? "green" : "gray"}>
           Main
         </Badge>
         <Badge variant="outline" colorScheme="green">
@@ -75,7 +81,9 @@ ApiItem.propTypes = {
     apiSecret: PropTypes.string.isRequired,
     ex: PropTypes.exact({
       id: PropTypes.string.isRequired,
-      text: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired
     }),
-  }).isRequired,
+    trucatedApiKey: PropTypes.string.isRequired,
+    isMain: PropTypes.bool.isRequired
+  }).isRequired
 };
