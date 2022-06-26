@@ -15,19 +15,23 @@ import VirtualList from "rc-virtual-list";
 export const AccountInfo = ({ currentAccount }) => {
   const { accountInfo, totalBalance, currentApiPair } = currentAccount;
   const date = useMemo(() => {
-    const d = new Date(accountInfo.updateTime);
+    const d = new Date();
     return `${d.toDateString()} ${d.toLocaleTimeString()}`;
   }, []);
-
   return (
     <React.Fragment>
-      <Stat height="81px" flex="unset" marginBottom={"12px"}>
+      <Stat
+        height="81px"
+        flex="unset"
+        marginBottom={"12px"}
+        padding="10px 10px 0px 10px"
+      >
         <StatLabel>
-          <Flex height="24px" align="center">
+          <Flex height="24px" align="center" justify={"space-between"}>
+            Total Balance
             <Badge variant="outline" colorScheme="green">
               {currentApiPair.ex.text}
             </Badge>
-            Total Balance
           </Flex>
         </StatLabel>
         <StatNumber>${totalBalance}</StatNumber>
@@ -40,7 +44,12 @@ export const AccountInfo = ({ currentAccount }) => {
         paddingRight="10px"
         shadow={"base"}
       >
-        <Flex justify="center" width="50px" fontSize="14px" fontWeight={600}>
+        <Flex
+          justify="flex-start"
+          width="50px"
+          fontSize="14px"
+          fontWeight={600}
+        >
           Coin
         </Flex>
         <Flex justify="flex-end" width="145px" fontSize="14px" fontWeight={600}>
@@ -52,7 +61,7 @@ export const AccountInfo = ({ currentAccount }) => {
       </HStack>
       <VirtualList
         data={accountInfo.balances}
-        height={367}
+        height={387}
         itemHeight={30}
         itemKey="id"
       >
@@ -66,7 +75,7 @@ export const AccountInfo = ({ currentAccount }) => {
               key={index}
             >
               <Flex
-                justify="center"
+                justify="flex-start"
                 width="50px"
                 fontSize="14px"
                 fontWeight={600}

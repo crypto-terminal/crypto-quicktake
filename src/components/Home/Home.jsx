@@ -71,12 +71,13 @@ export const Home = () => {
     return (
       <React.Fragment>
         <AccountInfo currentAccount={currentAccount} />
-        <Flex align="center" justify="center" height="60px">
+        <Flex align="center" justify="center" height="40px" boxShadow="base">
           <Stack spacing={8} direction="row">
             <Button
               leftIcon={<FaChevronLeft />}
               colorScheme="blue"
               onClick={handleGoPrevAccount}
+              size="xs"
             >
               Prev
             </Button>
@@ -84,6 +85,7 @@ export const Home = () => {
               rightIcon={<FaChevronRight />}
               colorScheme="blue"
               onClick={handleGoNextAccount}
+              size="xs"
             >
               Next
             </Button>
