@@ -10,12 +10,14 @@ export const setAllPairsToChrome = async (pairs) => {
 };
 
 export const getTmpPairSync = (cb) => {
+  if (typeof cb !== "function") throw new Error("callback must be a function");
   chrome.storage.sync.get(["tmp_addapikey_pair"], (result) => {
     cb(result.tmp_addapikey_pair || {});
   });
 };
 
 export const setTmpPairSync = (pair) => {
+  if (pair === undefined) throw new Error("a key secret pair is missing");
   chrome.storage.sync.set({ tmp_addapikey_pair: pair }, () => {
     console.log("DO NOT FORGET TO DELETE TMP VALUE AFTER SUBMIT"); // eslint-disable-line
   });
