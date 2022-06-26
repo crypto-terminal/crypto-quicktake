@@ -1,19 +1,19 @@
 module.exports = {
   env: {
     browser: true,
-    es2021: true,
+    es2021: true
   },
   extends: ["plugin:react/recommended", "airbnb", "prettier"],
   parserOptions: {
     ecmaFeatures: {
-      jsx: true,
+      jsx: true
     },
     ecmaVersion: "latest",
-    sourceType: "module",
+    sourceType: "module"
   },
   plugins: ["react"],
   globals: {
-    chrome: true,
+    chrome: true
   },
   rules: {
     "import/prefer-default-export": "off",
@@ -21,10 +21,10 @@ module.exports = {
       2,
       {
         namedComponents: "arrow-function",
-        unnamedComponents: "arrow-function",
-      },
+        unnamedComponents: "arrow-function"
+      }
     ],
     "react/react-in-jsx-scope": "off",
-    "react/jsx-fragments": "off",
-  },
+    "react/jsx-fragments": "off"
+  }
 };

@@ -14,7 +14,7 @@ export const ApiKeySecretPairList = ({ pairs }) => {
   const isMainAccount = useCallback(() => {}, []);
 
   return (
-    <List spacing={3} width="100%">
+    <List spacing={3} width="100%" height="520px">
       {pairs.map((pair) => (
         <ApiItem pair={pair} key={pair.apiKey} />
       ))}
@@ -29,10 +29,10 @@ ApiKeySecretPairList.propTypes = {
       apiSecret: PropTypes.string.isRequired,
       ex: PropTypes.exact({
         id: PropTypes.string.isRequired,
-        text: PropTypes.string.isRequired,
-      }),
+        text: PropTypes.string.isRequired
+      })
     })
-  ).isRequired,
+  ).isRequired
 };
 
 const ApiItem = ({ pair }) => {
@@ -41,7 +41,7 @@ const ApiItem = ({ pair }) => {
     return `${pair.apiKey.slice(0, 6)}...${pair.apiKey.slice(l - 5)}`;
   }, []);
   return (
-    <ListItem height="520px" width="100%">
+    <ListItem width="100%">
       <HStack spacing={1} width="100%">
         <ListIcon as={FaCog} color="green.500" />
         <Text fontWeight={700}>{pair.ex.text}: &nbsp;</Text>

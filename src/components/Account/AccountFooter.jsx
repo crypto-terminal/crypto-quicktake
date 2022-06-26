@@ -20,8 +20,21 @@ import {
   MenuItem,
   HStack,
 } from "@chakra-ui/react";
-import { FaUserPlus, FaFileExcel, FaChevronDown } from "react-icons/fa";
+import {
+  FaUserPlus,
+  FaFileExcel,
+  FaChevronDown,
+  FaTrashAlt
+} from "react-icons/fa";
 import { exchanges } from "../../constants";
+import {
+  getAllPairsFromChrome,
+  setAllPairsToChrome,
+  getTmpPairSync,
+  setTmpPairSync,
+  removeTmpPair,
+  onClearAllPairs
+} from "../../libs";
 
 const DEFAULT_INPUT = {};
 
@@ -66,6 +79,15 @@ export const AccountFooter = () => {
         >
           Bulk Add
         </Button>
+        <Button
+          leftIcon={<FaTrashAlt />}
+          colorScheme="grey"
+          variant="outline"
+          size="xs"
+          onClick={onClearAllPairs}
+        >
+          Clear All
+        </Button>
       </Flex>
       <AddModal isAddOpen={isAddOpen} onAddClose={onAddClose} />
     </React.Fragment>
@@ -78,7 +100,12 @@ const AddModal = (props) => {
   const inputRef = useRef();
 
   useEffect(() => {
+    getTmpPairSync(setInput);
+  }, [setInput]);
+
+  useEffect(() => {
     inputRef.current = JSON.parse(JSON.stringify(input));
+    setTmpPairSync(input);
   }, [input]);
 
   const handleUpdatePair = useCallback(
@@ -107,12 +134,16 @@ const AddModal = (props) => {
     }
     // console.log(inputRef?.current);
     // get the current key/secret pairs from chrome storage
+    const allPairs = await getAllPairsFromChrome(); // always returns an array
 
     // add the key/secret pair
+    allPairs.push(inputRef.current);
 
     // update the key/secret pairs in the chrome storage
+    setAllPairsToChrome(allPairs);
 
     setInput(DEFAULT_INPUT);
+    removeTmpPair();
     onAddClose();
   }, [onAddClose, inputRef, setInput]);
 
@@ -189,7 +220,7 @@ const AddModal = (props) => {
       </ModalContent>
     </Modal>
   );
-};;;
+};
 
 AddModal.propTypes = {
   isAddOpen: PropTypes.func.isRequired,
