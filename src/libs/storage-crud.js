@@ -31,12 +31,24 @@ export const clearAllPairs = async () => {
   await chrome.storage.sync.clear();
 };
 
-export const removeOnePairFromChrome = async (key) => {
+export const removeOnePairFromChromeAsync = async (key) => {
   let pairs = await getAllPairsFromChromeAsync();
   const index = pairs.findIndex((pair) => pair.apiKey === key);
   if (index > -1) {
     // in-place, please do not code like this: pairs = pairs.splice(index, 1);
     pairs.splice(index, 1);
+    await setAllPairsToChromeAsync(pairs);
+  }
+};
+
+export const setApiKeyAsMainAsync = async (key) => {
+  let pairs = await getAllPairsFromChromeAsync();
+  const index = pairs.findIndex((pair) => pair.apiKey === key);
+  if (index > -1) {
+    // in-place, please do not code like this: pairs = pairs.splice(index, 1);
+    const pair = pairs[index];
+    pairs.splice(index, 1);
+    pairs.unshift(pair);
     await setAllPairsToChromeAsync(pairs);
   }
 };

@@ -10,7 +10,7 @@ import {
   Badge
 } from "@chakra-ui/react";
 import { FaCog } from "react-icons/fa";
-import { removeOnePairFromChrome } from "../../libs";
+import { removeOnePairFromChromeAsync, setApiKeyAsMainAsync } from "../../libs";
 
 export const ApiKeySecretPairList = ({ pairs }) => {
   const _pairs = useMemo(() => {
@@ -50,8 +50,12 @@ ApiKeySecretPairList.propTypes = {
 const ApiItem = ({ pair }) => {
   const { ex, apiKey, trucatedApiKey, isMain } = pair;
   const handleRemoveOnePair = useCallback(async () => {
-    await removeOnePairFromChrome(apiKey);
+    await removeOnePairFromChromeAsync(apiKey);
   }, [apiKey]);
+
+  const handleSetMain = useCallback(async () => {
+    await setApiKeyAsMainAsync(apiKey);
+  }, []);
   return (
     <ListItem width="100%" mt={3}>
       <HStack spacing={1} width="100%">
@@ -69,6 +73,7 @@ const ApiItem = ({ pair }) => {
           variant="outline"
           colorScheme={isMain ? "green" : "gray"}
           _hover={{ cursor: "pointer" }}
+          onClick={handleSetMain}
         >
           Main
         </Badge>
