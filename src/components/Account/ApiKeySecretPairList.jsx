@@ -7,12 +7,30 @@ import {
   Tooltip,
   Text,
   HStack,
-  Badge
+  Badge,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  FormControl,
+  FormLabel,
+  Input,
+  Button
 } from "@chakra-ui/react";
 import { FaCog } from "react-icons/fa";
 import { removeOnePairFromChromeAsync, setApiKeyAsMainAsync } from "../../libs";
 
 export const ApiKeySecretPairList = ({ pairs }) => {
+  const {
+    isOpen: isEditModalOpen,
+    onOpen: onEditModalOpen,
+    onClose: onEditModalClose
+  } = useDisclosure();
+
   const _pairs = useMemo(() => {
     return pairs.map((pair, index) => {
       const first5 = pair.apiKey.slice(0, 5);
@@ -20,17 +38,49 @@ export const ApiKeySecretPairList = ({ pairs }) => {
       return {
         ...pair,
         trucatedApiKey: `${first5}...${last5}`,
-        isMain: index === 0
+        isMain: index === 0,
+        onEditModalOpen
       };
     });
   }, []);
 
   return (
-    <List width="100%" height="520px">
-      {_pairs.map((pair) => (
-        <ApiItem pair={pair} key={pair.apiKey} />
-      ))}
-    </List>
+    <React.Fragment>
+      <List width="100%" height="520px">
+        {_pairs.map((pair) => (
+          <ApiItem pair={pair} key={pair.apiKey} />
+        ))}
+      </List>
+      <Modal isOpen={isEditModalOpen} onClose={onEditModalClose}>
+        <ModalOverlay />
+        <ModalContent margin="auto 10px">
+          <ModalHeader>Edit your API</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <FormControl mt={2}>
+              <FormLabel>Crypto Exchange</FormLabel>
+              <Input isReadOnly placeholder="Exchange" size="md" />
+            </FormControl>
+            <FormControl mt={2}>
+              <FormLabel>API Key</FormLabel>
+              <Input placeholder="API Key" name="apiKey" />
+            </FormControl>
+
+            <FormControl mt={2}>
+              <FormLabel>API secret</FormLabel>
+              <Input placeholder="API secret" name="apiSecret" />
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3}>
+              Save
+            </Button>
+            <Button onClick={onEditModalClose}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </React.Fragment>
   );
 };
 
@@ -48,7 +98,7 @@ ApiKeySecretPairList.propTypes = {
 };
 
 const ApiItem = ({ pair }) => {
-  const { ex, apiKey, trucatedApiKey, isMain } = pair;
+  const { ex, apiKey, trucatedApiKey, isMain, onEditModalOpen } = pair;
   const handleRemoveOnePair = useCallback(async () => {
     await removeOnePairFromChromeAsync(apiKey);
   }, [apiKey]);
@@ -81,6 +131,7 @@ const ApiItem = ({ pair }) => {
           variant="outline"
           colorScheme="green"
           _hover={{ cursor: "pointer" }}
+          onClick={onEditModalOpen}
         >
           Edit
         </Badge>

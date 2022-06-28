@@ -198,7 +198,7 @@ const AddModal = (props) => {
             </Menu>
             <Input
               isReadOnly
-              placeholder="Exchange or Wallet"
+              placeholder="Exchange"
               size="md"
               value={input.ex?.text || ""}
             />

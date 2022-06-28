@@ -115,7 +115,7 @@ export const AddApiKey = (props) => {
           </Menu>
           <Input
             isReadOnly
-            placeholder="Exchange or Wallet"
+            placeholder="Exchange"
             size="md"
             value={apiKeySecretPair.ex?.text || ""}
           />
