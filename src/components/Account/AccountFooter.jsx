@@ -150,7 +150,7 @@ const AddModal = (props) => {
       removeTmpPair();
       onAddClose();
     } else {
-      alert("API key already exists")
+      alert("API key already exists") // eslint-disable-line
     }
   }, [onAddClose, inputRef, setInput]);
 

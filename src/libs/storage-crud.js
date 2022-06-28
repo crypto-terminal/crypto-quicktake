@@ -32,7 +32,7 @@ export const clearAllPairs = async () => {
 };
 
 export const removeOnePairFromChromeAsync = async (key) => {
-  let pairs = await getAllPairsFromChromeAsync();
+  const pairs = await getAllPairsFromChromeAsync();
   const index = pairs.findIndex((pair) => pair.apiKey === key);
   if (index > -1) {
     // in-place, please do not code like this: pairs = pairs.splice(index, 1);
@@ -42,7 +42,7 @@ export const removeOnePairFromChromeAsync = async (key) => {
 };
 
 export const setApiKeyAsMainAsync = async (key) => {
-  let pairs = await getAllPairsFromChromeAsync();
+  const pairs = await getAllPairsFromChromeAsync();
   const index = pairs.findIndex((pair) => pair.apiKey === key);
   if (index > -1) {
     // in-place, please do not code like this: pairs = pairs.splice(index, 1);

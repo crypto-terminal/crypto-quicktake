@@ -157,6 +157,7 @@ ApiItem.propTypes = {
       text: PropTypes.string.isRequired
     }),
     trucatedApiKey: PropTypes.string.isRequired,
-    isMain: PropTypes.bool.isRequired
+    isMain: PropTypes.bool.isRequired,
+    onEditModalOpen: PropTypes.func.isRequired
   }).isRequired
 };
