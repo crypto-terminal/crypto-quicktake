@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import {
   List,
@@ -10,6 +10,7 @@ import {
   Badge
 } from "@chakra-ui/react";
 import { FaCog } from "react-icons/fa";
+import { removeOnePairFromChrome } from "../../libs";
 
 export const ApiKeySecretPairList = ({ pairs }) => {
   const _pairs = useMemo(() => {
@@ -48,6 +49,9 @@ ApiKeySecretPairList.propTypes = {
 
 const ApiItem = ({ pair }) => {
   const { ex, apiKey, trucatedApiKey, isMain } = pair;
+  const handleRemoveOnePair = useCallback(async () => {
+    await removeOnePairFromChrome(apiKey);
+  }, [apiKey]);
   return (
     <ListItem width="100%" mt={3}>
       <HStack spacing={1} width="100%">
@@ -61,13 +65,26 @@ const ApiItem = ({ pair }) => {
           </Tooltip>
         </Text>
 
-        <Badge variant="outline" colorScheme={isMain ? "green" : "gray"}>
+        <Badge
+          variant="outline"
+          colorScheme={isMain ? "green" : "gray"}
+          _hover={{ cursor: "pointer" }}
+        >
           Main
         </Badge>
-        <Badge variant="outline" colorScheme="green">
+        <Badge
+          variant="outline"
+          colorScheme="green"
+          _hover={{ cursor: "pointer" }}
+        >
           Edit
         </Badge>
-        <Badge variant="outline" colorScheme="red">
+        <Badge
+          variant="outline"
+          colorScheme="red"
+          _hover={{ cursor: "pointer" }}
+          onClick={handleRemoveOnePair}
+        >
           Remove
         </Badge>
       </HStack>

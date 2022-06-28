@@ -28,12 +28,12 @@ import {
 } from "react-icons/fa";
 import { exchanges } from "../../constants";
 import {
-  getAllPairsFromChrome,
-  setAllPairsToChrome,
+  getAllPairsFromChromeAsync,
+  setAllPairsToChromeAsync,
   getTmpPairSync,
   setTmpPairSync,
   removeTmpPair,
-  onClearAllPairs
+  clearAllPairs
 } from "../../libs";
 
 const DEFAULT_INPUT = {};
@@ -84,7 +84,7 @@ export const AccountFooter = () => {
           colorScheme="grey"
           variant="outline"
           size="xs"
-          onClick={onClearAllPairs}
+          onClick={clearAllPairs}
         >
           Clear All
         </Button>
@@ -136,7 +136,7 @@ const AddModal = (props) => {
     }
     // console.log(inputRef?.current);
     // get the current key/secret pairs from chrome storage
-    const allPairs = await getAllPairsFromChrome(); // always returns an array
+    const allPairs = await getAllPairsFromChromeAsync(); // always returns an array
 
     const isUniquePair = !allPairs.find(pair => pair.apiKey === inputRef.current.apiKey)
     if (isUniquePair) {
@@ -144,7 +144,7 @@ const AddModal = (props) => {
       allPairs.push(inputRef.current);
 
       // update the key/secret pairs in the chrome storage
-      setAllPairsToChrome(allPairs);
+      setAllPairsToChromeAsync(allPairs);
 
       setInput(DEFAULT_INPUT);
       removeTmpPair();

@@ -1,9 +1,9 @@
-export const getAllPairsFromChrome = async () => {
+export const getAllPairsFromChromeAsync = async () => {
   const result = await chrome.storage.sync.get(["apiKeySecretPairs"]);
   return result.apiKeySecretPairs || [];
 };
 
-export const setAllPairsToChrome = async (pairs) => {
+export const setAllPairsToChromeAsync = async (pairs) => {
   await chrome.storage.sync.set({
     apiKeySecretPairs: pairs
   });
@@ -27,6 +27,16 @@ export const removeTmpPair = async () => {
   await chrome.storage.sync.remove(["tmp_addapikey_pair"]);
 };
 
-export const onClearAllPairs = async () => {
+export const clearAllPairs = async () => {
   await chrome.storage.sync.clear();
+};
+
+export const removeOnePairFromChrome = async (key) => {
+  let pairs = await getAllPairsFromChromeAsync();
+  const index = pairs.findIndex((pair) => pair.apiKey === key);
+  if (index > -1) {
+    // in-place, please do not code like this: pairs = pairs.splice(index, 1);
+    pairs.splice(index, 1);
+    await setAllPairsToChromeAsync(pairs);
+  }
 };
