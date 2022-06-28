@@ -16,6 +16,7 @@ import {
 import { FaChevronDown } from "react-icons/fa";
 import { exchanges } from "../../constants";
 
+// add key/secret pair for the first time
 export const AddApiKey = (props) => {
   const [apiKeySecretPair, setApiKeySecretPair] = useState({});
 

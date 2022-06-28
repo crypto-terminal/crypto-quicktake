@@ -94,6 +94,8 @@ export const AccountFooter = () => {
   );
 };
 
+// add key/secret pairs repeatedly
+// should consider to prevent duplicates
 const AddModal = (props) => {
   const { isAddOpen, onAddClose } = props;
   const [input, setInput] = useState(DEFAULT_INPUT);
@@ -136,19 +138,30 @@ const AddModal = (props) => {
     // get the current key/secret pairs from chrome storage
     const allPairs = await getAllPairsFromChrome(); // always returns an array
 
-    // add the key/secret pair
-    allPairs.push(inputRef.current);
+    const isUniquePair = !allPairs.find(pair => pair.apiKey === inputRef.current.apiKey)
+    if (isUniquePair) {
+      // add the key/secret pair
+      allPairs.push(inputRef.current);
 
-    // update the key/secret pairs in the chrome storage
-    setAllPairsToChrome(allPairs);
+      // update the key/secret pairs in the chrome storage
+      setAllPairsToChrome(allPairs);
 
+      setInput(DEFAULT_INPUT);
+      removeTmpPair();
+      onAddClose();
+    } else {
+      alert("API key already exists")
+    }
+  }, [onAddClose, inputRef, setInput]);
+
+  const handleClose = useCallback(() => {
     setInput(DEFAULT_INPUT);
     removeTmpPair();
     onAddClose();
-  }, [onAddClose, inputRef, setInput]);
+  }, [setInput])
 
   return (
-    <Modal isOpen={isAddOpen} onClose={onAddClose}>
+    <Modal isOpen={isAddOpen} onClose={handleClose}>
       <ModalOverlay />
       <ModalContent margin="auto 10px">
         <ModalHeader>Add your API</ModalHeader>
@@ -215,7 +228,7 @@ const AddModal = (props) => {
           <Button colorScheme="blue" mr={3} onClick={handleAdd}>
             Save
           </Button>
-          <Button onClick={onAddClose}>Cancel</Button>
+          <Button onClick={handleClose}>Cancel</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
