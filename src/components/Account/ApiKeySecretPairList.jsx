@@ -23,6 +23,7 @@ import {
 } from "@chakra-ui/react";
 import { FaCog } from "react-icons/fa";
 import { removeOnePairFromChromeAsync, setApiKeyAsMainAsync } from "../../libs";
+import { EditModal } from "./EditModal";
 
 export const ApiKeySecretPairList = ({ pairs }) => {
   const {
@@ -51,35 +52,10 @@ export const ApiKeySecretPairList = ({ pairs }) => {
           <ApiItem pair={pair} key={pair.apiKey} />
         ))}
       </List>
-      <Modal isOpen={isEditModalOpen} onClose={onEditModalClose}>
-        <ModalOverlay />
-        <ModalContent margin="auto 10px">
-          <ModalHeader>Edit your API</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody pb={6}>
-            <FormControl mt={2}>
-              <FormLabel>Crypto Exchange</FormLabel>
-              <Input isReadOnly placeholder="Exchange" size="md" />
-            </FormControl>
-            <FormControl mt={2}>
-              <FormLabel>API Key</FormLabel>
-              <Input placeholder="API Key" name="apiKey" />
-            </FormControl>
-
-            <FormControl mt={2}>
-              <FormLabel>API secret</FormLabel>
-              <Input placeholder="API secret" name="apiSecret" />
-            </FormControl>
-          </ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3}>
-              Save
-            </Button>
-            <Button onClick={onEditModalClose}>Cancel</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <EditModal
+        isEditModalOpen={isEditModalOpen}
+        onEditModalClose={onEditModalClose}
+      />
     </React.Fragment>
   );
 };
