@@ -11,8 +11,8 @@ import {
 import { FaCog } from "react-icons/fa";
 import { removeOnePairFromChromeAsync, setApiKeyAsMainAsync } from "../../libs";
 
-export const ApiListItem = ({ pair }) => {
-  const { ex, apiKey, trucatedApiKey, isMain, onEditModalOpen } = pair;
+export const ApiListItem = ({ pair, setCurrentEditableApi }) => {
+  const { ex, apiKey, trucatedApiKey, isMain } = pair;
   const handleRemoveOnePair = useCallback(async () => {
     await removeOnePairFromChromeAsync(apiKey);
   }, [apiKey]);
@@ -20,6 +20,12 @@ export const ApiListItem = ({ pair }) => {
   const handleSetMain = useCallback(async () => {
     await setApiKeyAsMainAsync(apiKey);
   }, []);
+
+  const handleEditClick = useCallback(() => {
+    pair.onEditModalOpen();
+    setCurrentEditableApi(pair);
+  }, [setCurrentEditableApi, pair]);
+
   return (
     <ListItem width="100%" mt={3}>
       <HStack spacing={1} width="100%">
@@ -45,7 +51,7 @@ export const ApiListItem = ({ pair }) => {
           variant="outline"
           colorScheme="green"
           _hover={{ cursor: "pointer" }}
-          onClick={onEditModalOpen}
+          onClick={handleEditClick}
         >
           Edit
         </Badge>
@@ -73,5 +79,6 @@ ApiListItem.propTypes = {
     trucatedApiKey: PropTypes.string.isRequired,
     isMain: PropTypes.bool.isRequired,
     onEditModalOpen: PropTypes.func.isRequired
-  }).isRequired
+  }).isRequired,
+  setCurrentEditableApi: PropTypes.func.isRequired
 };

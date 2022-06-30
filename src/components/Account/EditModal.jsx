@@ -15,9 +15,10 @@ import {
 } from "@chakra-ui/react";
 
 export const EditModal = (props) => {
-  const { isEditModalOpen, onEditModalClose } = props;
+  const { isEditModalOpen, handleOnClose, currentEditableApi } = props;
+
   return (
-    <Modal isOpen={isEditModalOpen} onClose={onEditModalClose}>
+    <Modal isOpen={isEditModalOpen} onClose={handleOnClose}>
       <ModalOverlay />
       <ModalContent margin="auto 10px">
         <ModalHeader>Edit your API</ModalHeader>
@@ -25,16 +26,29 @@ export const EditModal = (props) => {
         <ModalBody pb={6}>
           <FormControl mt={2}>
             <FormLabel>Crypto Exchange</FormLabel>
-            <Input isReadOnly placeholder="Exchange" size="md" />
+            <Input
+              isReadOnly
+              placeholder="Exchange"
+              size="md"
+              value={currentEditableApi.ex?.text}
+            />
           </FormControl>
           <FormControl mt={2}>
             <FormLabel>API Key</FormLabel>
-            <Input placeholder="API Key" name="apiKey" />
+            <Input
+              placeholder="API Key"
+              name="apiKey"
+              value={currentEditableApi.apiKey}
+            />
           </FormControl>
 
           <FormControl mt={2}>
             <FormLabel>API secret</FormLabel>
-            <Input placeholder="API secret" name="apiSecret" />
+            <Input
+              placeholder="API secret"
+              name="apiSecret"
+              value={currentEditableApi.apiSecret}
+            />
           </FormControl>
         </ModalBody>
 
@@ -42,7 +56,7 @@ export const EditModal = (props) => {
           <Button colorScheme="blue" mr={3}>
             Save
           </Button>
-          <Button onClick={onEditModalClose}>Cancel</Button>
+          <Button onClick={handleOnClose}>Cancel</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
@@ -51,5 +65,6 @@ export const EditModal = (props) => {
 
 EditModal.propTypes = {
   isEditModalOpen: PropTypes.func.isRequired,
-  onEditModalClose: PropTypes.func.isRequired
+  handleOnClose: PropTypes.func.isRequired,
+  currentEditableApi: PropTypes.object.isRequired // eslint-disable-line
 };

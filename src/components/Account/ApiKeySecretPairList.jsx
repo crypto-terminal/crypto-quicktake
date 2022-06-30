@@ -1,28 +1,7 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import PropTypes from "prop-types";
-import {
-  List,
-  ListItem,
-  ListIcon,
-  Tooltip,
-  Text,
-  HStack,
-  Badge,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-  FormControl,
-  FormLabel,
-  Input,
-  Button
-} from "@chakra-ui/react";
-import { FaCog } from "react-icons/fa";
-import { removeOnePairFromChromeAsync, setApiKeyAsMainAsync } from "../../libs";
+import { List, useDisclosure } from "@chakra-ui/react";
+
 import { EditModal } from "./EditModal";
 import { ApiListItem } from "./ApiListItem";
 
@@ -32,6 +11,13 @@ export const ApiKeySecretPairList = ({ pairs }) => {
     onOpen: onEditModalOpen,
     onClose: onEditModalClose
   } = useDisclosure();
+
+  const [currentEditableApi, setCurrentEditableApi] = useState({});
+
+  const handleEditOnClose = useCallback(() => {
+    setCurrentEditableApi({});
+    onEditModalClose();
+  }, [onEditModalClose, setCurrentEditableApi]);
 
   const _pairs = useMemo(() => {
     return pairs.map((pair, index) => {
@@ -44,18 +30,23 @@ export const ApiKeySecretPairList = ({ pairs }) => {
         onEditModalOpen
       };
     });
-  }, []);
+  }, [pairs]);
 
   return (
     <React.Fragment>
       <List width="100%" height="520px">
         {_pairs.map((pair) => (
-          <ApiListItem pair={pair} key={pair.apiKey} />
+          <ApiListItem
+            pair={pair}
+            key={pair.apiKey}
+            setCurrentEditableApi={setCurrentEditableApi}
+          />
         ))}
       </List>
       <EditModal
         isEditModalOpen={isEditModalOpen}
-        onEditModalClose={onEditModalClose}
+        handleOnClose={handleEditOnClose}
+        currentEditableApi={currentEditableApi}
       />
     </React.Fragment>
   );
@@ -73,4 +64,3 @@ ApiKeySecretPairList.propTypes = {
     })
   ).isRequired
 };
-
