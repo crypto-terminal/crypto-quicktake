@@ -24,6 +24,7 @@ import {
 import { FaCog } from "react-icons/fa";
 import { removeOnePairFromChromeAsync, setApiKeyAsMainAsync } from "../../libs";
 import { EditModal } from "./EditModal";
+import { ApiListItem } from "./ApiListItem";
 
 export const ApiKeySecretPairList = ({ pairs }) => {
   const {
@@ -49,7 +50,7 @@ export const ApiKeySecretPairList = ({ pairs }) => {
     <React.Fragment>
       <List width="100%" height="520px">
         {_pairs.map((pair) => (
-          <ApiItem pair={pair} key={pair.apiKey} />
+          <ApiListItem pair={pair} key={pair.apiKey} />
         ))}
       </List>
       <EditModal
@@ -73,67 +74,3 @@ ApiKeySecretPairList.propTypes = {
   ).isRequired
 };
 
-const ApiItem = ({ pair }) => {
-  const { ex, apiKey, trucatedApiKey, isMain, onEditModalOpen } = pair;
-  const handleRemoveOnePair = useCallback(async () => {
-    await removeOnePairFromChromeAsync(apiKey);
-  }, [apiKey]);
-
-  const handleSetMain = useCallback(async () => {
-    await setApiKeyAsMainAsync(apiKey);
-  }, []);
-  return (
-    <ListItem width="100%" mt={3}>
-      <HStack spacing={1} width="100%">
-        <ListIcon as={FaCog} color="green.500" />
-        <Text fontWeight={700} minWidth="80px">
-          {ex.text}:
-        </Text>
-        <Text w="80px" noOfLines={1}>
-          <Tooltip hasArrow placement="top" label={apiKey}>
-            {trucatedApiKey /** fixed width */}
-          </Tooltip>
-        </Text>
-
-        <Badge
-          variant="outline"
-          colorScheme={isMain ? "green" : "gray"}
-          _hover={{ cursor: "pointer" }}
-          onClick={handleSetMain}
-        >
-          Main
-        </Badge>
-        <Badge
-          variant="outline"
-          colorScheme="green"
-          _hover={{ cursor: "pointer" }}
-          onClick={onEditModalOpen}
-        >
-          Edit
-        </Badge>
-        <Badge
-          variant="outline"
-          colorScheme="red"
-          _hover={{ cursor: "pointer" }}
-          onClick={handleRemoveOnePair}
-        >
-          Remove
-        </Badge>
-      </HStack>
-    </ListItem>
-  );
-};
-
-ApiItem.propTypes = {
-  pair: PropTypes.exact({
-    apiKey: PropTypes.string.isRequired,
-    apiSecret: PropTypes.string.isRequired,
-    ex: PropTypes.exact({
-      id: PropTypes.string.isRequired,
-      text: PropTypes.string.isRequired
-    }),
-    trucatedApiKey: PropTypes.string.isRequired,
-    isMain: PropTypes.bool.isRequired,
-    onEditModalOpen: PropTypes.func.isRequired
-  }).isRequired
-};
