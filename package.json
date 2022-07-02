@@ -7,7 +7,8 @@
     "start": "parcel",
     "build": "rm -rf dist/ && parcel build",
     "postbuild": "sh postbuild.sh",
-    "lint": "eslint \"./src/**/*\""
+    "lint": "eslint \"./src/**/*\"",
+    "eslint": "eslint"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.1.0",

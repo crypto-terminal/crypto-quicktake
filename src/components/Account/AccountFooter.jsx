@@ -9,7 +9,6 @@ import {
   FaFileExcel,
   FaTrashAlt
 } from "react-icons/fa";
-
 import {
   clearAllPairs
 } from "../../libs";
@@ -23,11 +22,6 @@ export const AccountFooter = () => {
     onClose: onAddClose
   } = useDisclosure();
 
-  const {
-    isOpen: isBulkAddOpen,
-    onOpen: onBulkAddOpen,
-    onClose: onBulkAddClose
-  } = useDisclosure();
 
   const {
     isOpen: isConfirmClearModalOpen,
@@ -59,7 +53,7 @@ export const AccountFooter = () => {
           colorScheme="blue"
           variant="outline"
           size="xs"
-          onClick={onBulkAddOpen}
+          onClick={() => null}
         >
           Bulk Add
         </Button>
@@ -76,10 +70,6 @@ export const AccountFooter = () => {
       <AddModal isAddOpen={isAddOpen} onAddClose={onAddClose} />
       <AreYouSureModal isModalOpen={isConfirmClearModalOpen} handleOnYes={clearAllPairs} handleOnNo={onConfirmClearModalClose}  question="to delete all APIs?" />
     </React.Fragment>
-  );
+  ); 
 };
 
-
-const BulkAddModal = () => {
-  return <></>;
-};
