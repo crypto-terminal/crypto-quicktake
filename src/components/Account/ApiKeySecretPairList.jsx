@@ -2,22 +2,22 @@ import React, { useState, useMemo, useCallback } from "react";
 import PropTypes from "prop-types";
 import { List, useDisclosure } from "@chakra-ui/react";
 
-import { EditModal } from "./EditModal";
+import { InfoModal } from "./InfoModal";
 import { ApiListItem } from "./ApiListItem";
 
 export const ApiKeySecretPairList = ({ pairs }) => {
   const {
-    isOpen: isEditModalOpen,
-    onOpen: onEditModalOpen,
+    isOpen: isInfoModalOpen,
+    onOpen: onInfoModalOpen,
     onClose: onEditModalClose
   } = useDisclosure();
 
-  const [currentEditableApi, setCurrentEditableApi] = useState({});
+  const [currentApiInfo, setCurrentApiInfo] = useState({});
 
   const handleEditOnClose = useCallback(() => {
-    setCurrentEditableApi({});
+    setCurrentApiInfo({});
     onEditModalClose();
-  }, [onEditModalClose, setCurrentEditableApi]);
+  }, [onEditModalClose, setCurrentApiInfo]);
 
   const _pairs = useMemo(() => {
     return pairs.map((pair, index) => {
@@ -27,10 +27,10 @@ export const ApiKeySecretPairList = ({ pairs }) => {
         ...pair,
         trucatedApiKey: `${first5}...${last5}`,
         isMain: index === 0,
-        onEditModalOpen
+        onInfoModalOpen
       };
     });
-  }, [pairs]);
+  }, [pairs, onInfoModalOpen]);
 
   return (
     <React.Fragment>
@@ -39,14 +39,14 @@ export const ApiKeySecretPairList = ({ pairs }) => {
           <ApiListItem
             pair={pair}
             key={pair.apiKey}
-            setCurrentEditableApi={setCurrentEditableApi}
+            setCurrentApiInfo={setCurrentApiInfo}
           />
         ))}
       </List>
-      <EditModal
-        isEditModalOpen={isEditModalOpen}
+      <InfoModal
+        isInfoModalOpen={isInfoModalOpen}
         handleOnClose={handleEditOnClose}
-        currentEditableApi={currentEditableApi}
+        currentApiInfo={currentApiInfo}
       />
     </React.Fragment>
   );

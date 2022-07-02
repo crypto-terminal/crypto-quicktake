@@ -11,17 +11,18 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Button
+  Button,
+  Textarea
 } from "@chakra-ui/react";
 
-export const EditModal = (props) => {
-  const { isEditModalOpen, handleOnClose, currentEditableApi } = props;
+export const InfoModal = (props) => {
+  const { isInfoModalOpen, handleOnClose, currentApiInfo } = props;
 
   return (
-    <Modal isOpen={isEditModalOpen} onClose={handleOnClose}>
+    <Modal isOpen={isInfoModalOpen} onClose={handleOnClose}>
       <ModalOverlay />
       <ModalContent margin="auto 10px">
-        <ModalHeader>Edit your API</ModalHeader>
+        <ModalHeader>Full API Information</ModalHeader>
         <ModalCloseButton />
         <ModalBody pb={6}>
           <FormControl mt={2}>
@@ -30,24 +31,24 @@ export const EditModal = (props) => {
               isReadOnly
               placeholder="Exchange"
               size="md"
-              value={currentEditableApi.ex?.text}
+              value={currentApiInfo.ex?.text}
             />
           </FormControl>
           <FormControl mt={2}>
             <FormLabel>API Key</FormLabel>
-            <Input
+            <Textarea
               placeholder="API Key"
               name="apiKey"
-              value={currentEditableApi.apiKey}
+              value={currentApiInfo.apiKey}
             />
           </FormControl>
 
           <FormControl mt={2}>
             <FormLabel>API secret</FormLabel>
-            <Input
+            <Textarea
               placeholder="API secret"
               name="apiSecret"
-              value={currentEditableApi.apiSecret}
+              value={currentApiInfo.apiSecret}
             />
           </FormControl>
         </ModalBody>
@@ -63,8 +64,8 @@ export const EditModal = (props) => {
   );
 };
 
-EditModal.propTypes = {
-  isEditModalOpen: PropTypes.func.isRequired,
+InfoModal.propTypes = {
+  isInfoModalOpen: PropTypes.func.isRequired,
   handleOnClose: PropTypes.func.isRequired,
-  currentEditableApi: PropTypes.object.isRequired // eslint-disable-line
+  currentApiInfo: PropTypes.object.isRequired // eslint-disable-line
 };
