@@ -54,10 +54,9 @@ export const InfoModal = (props) => {
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme="blue" mr={3}>
-            Save
+          <Button colorScheme="blue" onClick={handleOnClose}>
+            OK
           </Button>
-          <Button onClick={handleOnClose}>Cancel</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
