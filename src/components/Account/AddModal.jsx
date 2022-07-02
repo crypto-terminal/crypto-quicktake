@@ -164,7 +164,7 @@ export const AddModal = (props) => {
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={handleAdd}>
+          <Button colorScheme="blue" mr={2} onClick={handleAdd}>
             Save
           </Button>
           <Button onClick={handleClose}>Cancel</Button>

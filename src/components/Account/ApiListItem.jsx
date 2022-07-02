@@ -6,13 +6,22 @@ import {
   Tooltip,
   Text,
   HStack,
-  Badge
+  Badge,
+  useDisclosure
 } from "@chakra-ui/react";
 import { FaCog } from "react-icons/fa";
 import { removeOnePairFromChromeAsync, setApiKeyAsMainAsync } from "../../libs";
+import { AreYouSure as AreYouSureModal } from "../.AreYouSure";
 
 export const ApiListItem = ({ pair, setCurrentApiInfo }) => {
   const { ex, apiKey, trucatedApiKey, isMain } = pair;
+
+  const {
+    isOpen: isConfirmModalOpen,
+    onOpen: onConfirmModalOpen,
+    onClose: onConfirmModalClose
+  } = useDisclosure();
+
   const handleRemoveOnePair = useCallback(async () => {
     await removeOnePairFromChromeAsync(apiKey);
   }, [apiKey]);
@@ -27,44 +36,53 @@ export const ApiListItem = ({ pair, setCurrentApiInfo }) => {
   }, [setCurrentApiInfo, pair]);
 
   return (
-    <ListItem width="100%" mt={3}>
-      <HStack spacing={1} width="100%">
-        <ListIcon as={FaCog} color="green.500" />
-        <Text fontWeight={700} minWidth="80px">
-          {ex.text}:
-        </Text>
-        <Text w="80px" noOfLines={1}>
-          <Tooltip hasArrow placement="top" label={apiKey}>
-            {trucatedApiKey /** fixed width */}
-          </Tooltip>
-        </Text>
+    <React.Fragment>
+      <ListItem width="100%" mt={3}>
+        <HStack spacing={1} width="100%">
+          <ListIcon as={FaCog} color="green.500" />
+          <Text fontWeight={700} minWidth="80px">
+            {ex.text}:
+          </Text>
+          <Text w="80px" noOfLines={1}>
+            <Tooltip hasArrow placement="top" label={apiKey}>
+              {trucatedApiKey /** fixed width */}
+            </Tooltip>
+          </Text>
 
-        <Badge
-          variant="outline"
-          colorScheme={isMain ? "green" : "gray"}
-          _hover={{ cursor: "pointer" }}
-          onClick={handleSetMain}
-        >
-          Main
-        </Badge>
-        <Badge
-          variant="outline"
-          colorScheme="green"
-          _hover={{ cursor: "pointer" }}
-          onClick={handleInfoClick}
-        >
-          Info
-        </Badge>
-        <Badge
-          variant="outline"
-          colorScheme="red"
-          _hover={{ cursor: "pointer" }}
-          onClick={handleRemoveOnePair}
-        >
-          Remove
-        </Badge>
-      </HStack>
-    </ListItem>
+          <Badge
+            variant="outline"
+            colorScheme={isMain ? "green" : "gray"}
+            _hover={{ cursor: "pointer" }}
+            onClick={handleSetMain}
+          >
+            Main
+          </Badge>
+          <Badge
+            variant="outline"
+            colorScheme="green"
+            _hover={{ cursor: "pointer" }}
+            onClick={handleInfoClick}
+          >
+            Info
+          </Badge>
+          <Badge
+            variant="outline"
+            colorScheme="red"
+            _hover={{ cursor: "pointer" }}
+            onClick={onConfirmModalOpen}
+          >
+            Remove
+          </Badge>
+        </HStack>
+      </ListItem>
+      <AreYouSureModal
+        isModalOpen={isConfirmModalOpen}
+        handleOnYes={handleRemoveOnePair}
+        handleOnNo={onConfirmModalClose}
+        noText="Never mind"
+        question="to remove this account?"
+      />
+    </React.Fragment>
   );
 };
 
