@@ -1,42 +1,20 @@
-import React, { useCallback, useState, useRef, useEffect } from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import {
   Button,
   Flex,
   useDisclosure,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  FormControl,
-  FormLabel,
-  Input,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  HStack,
 } from "@chakra-ui/react";
 import {
   FaUserPlus,
   FaFileExcel,
-  FaChevronDown,
   FaTrashAlt
 } from "react-icons/fa";
-import { exchanges } from "../../constants";
+
 import {
-  getAllPairsFromChromeAsync,
-  setAllPairsToChromeAsync,
-  getTmpPairSync,
-  setTmpPairSync,
-  removeTmpPair,
   clearAllPairs
 } from "../../libs";
 import { AddModal } from './AddModal'
-
+import { AreYouSure as AreYouSureModal} from "../.AreYouSure";
 
 export const AccountFooter = () => {
   const {
@@ -49,6 +27,12 @@ export const AccountFooter = () => {
     isOpen: isBulkAddOpen,
     onOpen: onBulkAddOpen,
     onClose: onBulkAddClose
+  } = useDisclosure();
+
+  const {
+    isOpen: isConfirmClearModalOpen,
+    onOpen: onConfirmClearModalOpen,
+    onClose: onConfirmClearModalClose
   } = useDisclosure();
 
   return (
@@ -84,12 +68,13 @@ export const AccountFooter = () => {
           colorScheme="grey"
           variant="outline"
           size="xs"
-          onClick={clearAllPairs}
+          onClick={onConfirmClearModalOpen}
         >
           Clear All
         </Button>
       </Flex>
       <AddModal isAddOpen={isAddOpen} onAddClose={onAddClose} />
+      <AreYouSureModal isModalOpen={isConfirmClearModalOpen} handleOnYes={clearAllPairs} handleOnNo={onConfirmClearModalClose}  question="to delete all APIs?" />
     </React.Fragment>
   );
 };
