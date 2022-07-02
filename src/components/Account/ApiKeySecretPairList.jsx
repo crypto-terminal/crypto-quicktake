@@ -1,24 +1,9 @@
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
-import { List, useDisclosure } from "@chakra-ui/react";
-
-import { InfoModal } from "./InfoModal";
+import { List } from "@chakra-ui/react";
 import { ApiListItem } from "./ApiListItem";
 
 export const ApiKeySecretPairList = ({ pairs }) => {
-  const {
-    isOpen: isInfoModalOpen,
-    onOpen: onInfoModalOpen,
-    onClose: onEditModalClose
-  } = useDisclosure();
-
-  const [currentApiInfo, setCurrentApiInfo] = useState({});
-
-  const handleEditOnClose = useCallback(() => {
-    setCurrentApiInfo({});
-    onEditModalClose();
-  }, [onEditModalClose, setCurrentApiInfo]);
-
   const _pairs = useMemo(() => {
     return pairs.map((pair, index) => {
       const first5 = pair.apiKey.slice(0, 5);
@@ -26,29 +11,17 @@ export const ApiKeySecretPairList = ({ pairs }) => {
       return {
         ...pair,
         trucatedApiKey: `${first5}...${last5}`,
-        isMain: index === 0,
-        onInfoModalOpen
+        isMain: index === 0
       };
     });
-  }, [pairs, onInfoModalOpen]);
+  }, [pairs]);
 
   return (
-    <React.Fragment>
-      <List width="100%" height="520px">
-        {_pairs.map((pair) => (
-          <ApiListItem
-            pair={pair}
-            key={pair.apiKey}
-            setCurrentApiInfo={setCurrentApiInfo}
-          />
-        ))}
-      </List>
-      <InfoModal
-        isInfoModalOpen={isInfoModalOpen}
-        handleOnClose={handleEditOnClose}
-        currentApiInfo={currentApiInfo}
-      />
-    </React.Fragment>
+    <List width="100%" height="520px">
+      {_pairs.map((pair) => (
+        <ApiListItem pair={pair} key={pair.apiKey} />
+      ))}
+    </List>
   );
 };
 

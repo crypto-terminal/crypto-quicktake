@@ -12,9 +12,16 @@ import {
 import { FaCog } from "react-icons/fa";
 import { removeOnePairFromChromeAsync, setApiKeyAsMainAsync } from "../../libs";
 import { AreYouSure as AreYouSureModal } from "../.AreYouSure";
+import { InfoModal } from "./InfoModal";
 
-export const ApiListItem = ({ pair, setCurrentApiInfo }) => {
+export const ApiListItem = ({ pair }) => {
   const { ex, apiKey, trucatedApiKey, isMain } = pair;
+
+  const {
+    isOpen: isInfoModalOpen,
+    onOpen: onInfoModalOpen,
+    onClose: onInfoModalClose
+  } = useDisclosure();
 
   const {
     isOpen: isConfirmModalOpen,
@@ -29,11 +36,6 @@ export const ApiListItem = ({ pair, setCurrentApiInfo }) => {
   const handleSetMain = useCallback(async () => {
     await setApiKeyAsMainAsync(apiKey);
   }, []);
-
-  const handleInfoClick = useCallback(() => {
-    pair.onInfoModalOpen();
-    setCurrentApiInfo(pair);
-  }, [setCurrentApiInfo, pair]);
 
   return (
     <React.Fragment>
@@ -61,7 +63,7 @@ export const ApiListItem = ({ pair, setCurrentApiInfo }) => {
             variant="outline"
             colorScheme="green"
             _hover={{ cursor: "pointer" }}
-            onClick={handleInfoClick}
+            onClick={onInfoModalOpen}
           >
             Info
           </Badge>
@@ -82,6 +84,11 @@ export const ApiListItem = ({ pair, setCurrentApiInfo }) => {
         noText="Never mind"
         question="to remove this account?"
       />
+      <InfoModal
+        isInfoModalOpen={isInfoModalOpen}
+        onInfoModalClose={onInfoModalClose}
+        pair={pair}
+      />
     </React.Fragment>
   );
 };
@@ -97,6 +104,5 @@ ApiListItem.propTypes = {
     trucatedApiKey: PropTypes.string.isRequired,
     isMain: PropTypes.bool.isRequired,
     onInfoModalOpen: PropTypes.func.isRequired
-  }).isRequired,
-  setCurrentApiInfo: PropTypes.func.isRequired
+  }).isRequired
 };

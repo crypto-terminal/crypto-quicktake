@@ -16,10 +16,10 @@ import {
 } from "@chakra-ui/react";
 
 export const InfoModal = (props) => {
-  const { isInfoModalOpen, handleOnClose, currentApiInfo } = props;
+  const { isInfoModalOpen, onInfoModalClose, pair } = props;
 
   return (
-    <Modal isOpen={isInfoModalOpen} onClose={handleOnClose}>
+    <Modal isOpen={isInfoModalOpen} onClose={onInfoModalClose}>
       <ModalOverlay />
       <ModalContent margin="auto 10px">
         <ModalHeader>Full API Information</ModalHeader>
@@ -31,16 +31,12 @@ export const InfoModal = (props) => {
               isReadOnly
               placeholder="Exchange"
               size="md"
-              value={currentApiInfo.ex?.text}
+              value={pair.ex?.text}
             />
           </FormControl>
           <FormControl mt={2}>
             <FormLabel>API Key</FormLabel>
-            <Textarea
-              placeholder="API Key"
-              name="apiKey"
-              value={currentApiInfo.apiKey}
-            />
+            <Textarea placeholder="API Key" name="apiKey" value={pair.apiKey} />
           </FormControl>
 
           <FormControl mt={2}>
@@ -48,13 +44,13 @@ export const InfoModal = (props) => {
             <Textarea
               placeholder="API secret"
               name="apiSecret"
-              value={currentApiInfo.apiSecret}
+              value={pair.apiSecret}
             />
           </FormControl>
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme="blue" onClick={handleOnClose}>
+          <Button colorScheme="blue" onClick={onInfoModalClose}>
             OK
           </Button>
         </ModalFooter>
@@ -65,6 +61,13 @@ export const InfoModal = (props) => {
 
 InfoModal.propTypes = {
   isInfoModalOpen: PropTypes.func.isRequired,
-  handleOnClose: PropTypes.func.isRequired,
-  currentApiInfo: PropTypes.object.isRequired // eslint-disable-line
+  onInfoModalClose: PropTypes.func.isRequired,
+  pair: PropTypes.exact({
+    apiKey: PropTypes.string.isRequired,
+    apiSecret: PropTypes.string.isRequired,
+    ex: PropTypes.exact({
+      id: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired
+    })
+  }).isRequired
 };
