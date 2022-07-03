@@ -8,7 +8,10 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  ModalCloseButton
+  ModalCloseButton,
+  FormControl,
+  FormLabel,
+  Input
 } from "@chakra-ui/react";
 import { FaChevronDown } from "react-icons/fa";
 import {
@@ -30,9 +33,14 @@ export const BulkAddModal = (props) => {
     <Modal isOpen={isBulkAddOpen} onClose={onBulkAddClose}>
       <ModalOverlay />
       <ModalContent margin="auto 10px">
-        <ModalHeader>Add your API</ModalHeader>
+        <ModalHeader>Add your APIs in bulk</ModalHeader>
         <ModalCloseButton />
-        <ModalBody pb={6}></ModalBody>
+        <ModalBody pb={6}>
+          <FormControl mt={2}>
+            <FormLabel>Upload excel or csv file</FormLabel>
+            <Input type="file" height="unset" />
+          </FormControl>
+        </ModalBody>
 
         <ModalFooter>
           <Button colorScheme="blue" mr={2} onClick={handleBulkAdd}>
