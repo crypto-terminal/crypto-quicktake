@@ -11,7 +11,8 @@ import {
   ModalCloseButton,
   FormControl,
   FormLabel,
-  Input
+  Input,
+  FormHelperText
 } from "@chakra-ui/react";
 import { FaChevronDown } from "react-icons/fa";
 import {
@@ -37,8 +38,9 @@ export const BulkAddModal = (props) => {
         <ModalCloseButton />
         <ModalBody pb={6}>
           <FormControl mt={2}>
-            <FormLabel>Upload excel or csv file</FormLabel>
+            <FormLabel>Upload file</FormLabel>
             <Input type="file" height="unset" />
+            <FormHelperText>Accpeted files: excel, csv, Numbers(macOS)</FormHelperText>
           </FormControl>
         </ModalBody>
 
