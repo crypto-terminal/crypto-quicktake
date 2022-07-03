@@ -6,23 +6,23 @@ const buttons = [
   {
     leftIcon: FaHome,
     text: "Home",
-    route: "/",
+    route: "/"
   },
   {
     leftIcon: FaBell,
     text: "News",
-    route: "/news",
+    route: "/news"
   },
   {
     rightIcon: FaChartLine,
     text: "Market",
-    route: "/market",
+    route: "/market"
   },
   {
     rightIcon: FaUserLock,
     text: "Account",
-    route: "/account",
-  },
+    route: "/account"
+  }
 ];
 
 export const TopNav = () => {

@@ -16,10 +16,7 @@ export const Home = () => {
       try {
         // First, get account api key secret pairs
         const result = await chrome.storage.sync.get(["apiKeySecretPairs"]);
-        if (
-          !result.apiKeySecretPairs ||
-          result.apiKeySecretPairs.length === 0
-        ) {
+        if (!result.apiKeySecretPairs || result.apiKeySecretPairs.length === 0) {
           setLoading(false);
           return;
         }
@@ -53,9 +50,7 @@ export const Home = () => {
 
   const handleGoPrevAccount = useCallback(() => {
     if (apiKeySecretPairs && apiKeySecretPairs.length > 1) {
-      setCurrentPairIndex(
-        (i) => (i + apiKeySecretPairs.length - 1) % apiKeySecretPairs.length
-      );
+      setCurrentPairIndex((i) => (i + apiKeySecretPairs.length - 1) % apiKeySecretPairs.length);
     }
   }, [apiKeySecretPairs, setCurrentPairIndex]);
 
@@ -94,8 +89,7 @@ export const Home = () => {
       </React.Fragment>
     );
 
-  if (!apiKeySecretPairs)
-    return <AddApiKey setApiKeySecretPairs={setApiKeySecretPairs} />;
+  if (!apiKeySecretPairs) return <AddApiKey setApiKeySecretPairs={setApiKeySecretPairs} />;
 
   return null;
 };

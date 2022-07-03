@@ -27,12 +27,7 @@ export const InfoModal = (props) => {
         <ModalBody pb={6}>
           <FormControl mt={2}>
             <FormLabel>Crypto Exchange</FormLabel>
-            <Input
-              isReadOnly
-              placeholder="Exchange"
-              size="md"
-              value={pair.ex?.text}
-            />
+            <Input isReadOnly placeholder="Exchange" size="md" value={pair.ex?.text} />
           </FormControl>
           <FormControl mt={2}>
             <FormLabel>API Key</FormLabel>
@@ -41,11 +36,7 @@ export const InfoModal = (props) => {
 
           <FormControl mt={2}>
             <FormLabel>API secret</FormLabel>
-            <Textarea
-              placeholder="API secret"
-              name="apiSecret"
-              value={pair.apiSecret}
-            />
+            <Textarea placeholder="API secret" name="apiSecret" value={pair.apiSecret} />
           </FormControl>
         </ModalBody>
 

@@ -27,7 +27,7 @@ export const removeTmpPair = async () => {
   await chrome.storage.sync.remove(["tmp_addapikey_pair"]);
 };
 
-export const clearAllPairs = async () => {
+export const clearAllPairsAsync = async () => {
   await chrome.storage.sync.clear();
 };
 

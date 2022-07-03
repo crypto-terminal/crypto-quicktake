@@ -1,14 +1,6 @@
 import React, { useCallback } from "react";
 import PropTypes from "prop-types";
-import {
-  ListItem,
-  ListIcon,
-  Tooltip,
-  Text,
-  HStack,
-  Badge,
-  useDisclosure
-} from "@chakra-ui/react";
+import { ListItem, ListIcon, Tooltip, Text, HStack, Badge, useDisclosure } from "@chakra-ui/react";
 import { FaCog } from "react-icons/fa";
 import { removeOnePairFromChromeAsync, setApiKeyAsMainAsync } from "../../libs";
 import { AreYouSure as AreYouSureModal } from "../.AreYouSure";

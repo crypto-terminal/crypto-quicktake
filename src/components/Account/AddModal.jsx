@@ -51,9 +51,7 @@ export const AddModal = (props) => {
     (evt) => {
       const key = evt.target.name;
       const value =
-        typeof evt.target.value === "string"
-          ? evt.target.value.trim()
-          : evt.target.value;
+        typeof evt.target.value === "string" ? evt.target.value.trim() : evt.target.value;
       setInput((_input) => ({
         ..._input,
         [key]: value
@@ -63,11 +61,7 @@ export const AddModal = (props) => {
   );
 
   const handleAdd = useCallback(async () => {
-    if (
-      !inputRef?.current?.apiKey ||
-      !inputRef?.current?.apiSecret ||
-      !inputRef?.current?.ex
-    ) {
+    if (!inputRef?.current?.apiKey || !inputRef?.current?.apiSecret || !inputRef?.current?.ex) {
       alert("Please fill all fields"); // eslint-disable-line no-alert
       return;
     }
@@ -75,9 +69,7 @@ export const AddModal = (props) => {
     // get the current key/secret pairs from chrome storage
     const allPairs = await getAllPairsFromChromeAsync(); // always returns an array
 
-    const isUniquePair = !allPairs.find(
-      (pair) => pair.apiKey === inputRef.current.apiKey
-    );
+    const isUniquePair = !allPairs.find((pair) => pair.apiKey === inputRef.current.apiKey);
     if (isUniquePair) {
       // add the key/secret pair
       allPairs.push(inputRef.current);
@@ -135,12 +127,7 @@ export const AddModal = (props) => {
                 ))}
               </MenuList>
             </Menu>
-            <Input
-              isReadOnly
-              placeholder="Exchange"
-              size="md"
-              value={input.ex?.text || ""}
-            />
+            <Input isReadOnly placeholder="Exchange" size="md" value={input.ex?.text || ""} />
           </HStack>
           <FormControl mt={2}>
             <FormLabel>API Key</FormLabel>

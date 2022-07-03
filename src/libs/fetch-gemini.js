@@ -1,13 +1,12 @@
-const BASE_URL = // "http://localhost:8888/.netlify/functions";
-  "https://crypto-quicktake-lambda.netlify.app/.netlify/functions";
+const BASE_URL = "https://crypto-quicktake-lambda.netlify.app/.netlify/functions"; // "http://localhost:8888/.netlify/functions";
 
 export const fetchGeminiAccount = async ({ pair }) => {
   const response = await fetch(`${BASE_URL}/gemini`, {
     method: "POST",
     headers: {
-      "Content-Type": "text/plain; charset=utf-8", // ! important
+      "Content-Type": "text/plain; charset=utf-8" // ! important
     },
-    body: JSON.stringify({ pair }),
+    body: JSON.stringify({ pair })
   });
 
   const json = await response.json();

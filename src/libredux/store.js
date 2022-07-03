@@ -7,13 +7,13 @@ const epicMiddleware = createEpicMiddleware();
 
 export const store = configureStore({
   reducer: {
-    app: appReducer,
+    app: appReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-      thunk: false,
-    }).concat(epicMiddleware),
+      thunk: false
+    }).concat(epicMiddleware)
 });
 
 // !ATTENTION: this has to be in the last line

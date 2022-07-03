@@ -3,12 +3,11 @@ import { fetchGeminiAccount } from "./fetch-gemini";
 
 export const fetchAll = {
   binance_us: {
-    account: fetchBinanceUsAccount,
+    account: fetchBinanceUsAccount
   },
   gemini: {
-    account: fetchGeminiAccount,
-  },
+    account: fetchGeminiAccount
+  }
 };
-
 
 export * from "./storage-crud";

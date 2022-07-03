@@ -13,8 +13,7 @@ import {
 } from "@chakra-ui/react";
 
 export const AreYouSure = (props) => {
-  const { isModalOpen, handleOnYes, handleOnNo, yesText, noText, question } =
-    props;
+  const { isModalOpen, handleOnYes, handleOnNo, yesText, noText, question } = props;
 
   return (
     <Modal isOpen={isModalOpen} onClose={handleOnNo}>

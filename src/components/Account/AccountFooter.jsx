@@ -1,33 +1,24 @@
-import React from "react";
-import {
-  Button,
-  Flex,
-  useDisclosure,
-} from "@chakra-ui/react";
-import {
-  FaUserPlus,
-  FaFileExcel,
-  FaTrashAlt
-} from "react-icons/fa";
-import {
-  clearAllPairs
-} from "../../libs";
-import { AddModal } from './AddModal'
-import { AreYouSure as AreYouSureModal} from "../.AreYouSure";
+import React, { useCallback } from "react";
+import { Button, Flex, useDisclosure } from "@chakra-ui/react";
+import { FaUserPlus, FaFileExcel, FaTrashAlt } from "react-icons/fa";
+import { clearAllPairsAsync } from "../../libs";
+import { AddModal } from "./AddModal";
+import { AreYouSure as AreYouSureModal } from "../.AreYouSure";
 
 export const AccountFooter = () => {
-  const {
-    isOpen: isAddOpen,
-    onOpen: onAddOpen,
-    onClose: onAddClose
-  } = useDisclosure();
-
+  const { isOpen: isAddOpen, onOpen: onAddOpen, onClose: onAddClose } = useDisclosure();
 
   const {
     isOpen: isConfirmClearModalOpen,
     onOpen: onConfirmClearModalOpen,
     onClose: onConfirmClearModalClose
   } = useDisclosure();
+
+  const handleClearConfirmModalYes = useCallback(() => {
+    clearAllPairsAsync().then(() => {
+      onConfirmClearModalClose();
+    });
+  }, [onConfirmClearModalClose]);
 
   return (
     <React.Fragment>
@@ -68,8 +59,12 @@ export const AccountFooter = () => {
         </Button>
       </Flex>
       <AddModal isAddOpen={isAddOpen} onAddClose={onAddClose} />
-      <AreYouSureModal isModalOpen={isConfirmClearModalOpen} handleOnYes={clearAllPairs} handleOnNo={onConfirmClearModalClose}  question="to delete all APIs?" />
+      <AreYouSureModal
+        isModalOpen={isConfirmClearModalOpen}
+        handleOnYes={handleClearConfirmModalYes}
+        handleOnNo={onConfirmClearModalClose}
+        question="to delete all APIs?"
+      />
     </React.Fragment>
-  ); 
+  );
 };
-

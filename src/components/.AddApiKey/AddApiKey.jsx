@@ -11,7 +11,7 @@ import {
   Heading,
   Text,
   Stack,
-  HStack,
+  HStack
 } from "@chakra-ui/react";
 import { FaChevronDown } from "react-icons/fa";
 import { exchanges } from "../../constants";
@@ -30,7 +30,7 @@ export const AddApiKey = (props) => {
   const handleUpdateApiKey = (kv) => {
     const pair = {
       ...apiKeySecretPair,
-      ...kv,
+      ...kv
     };
     setApiKeySecretPair(pair);
 
@@ -46,11 +46,7 @@ export const AddApiKey = (props) => {
       return;
     }
 
-    if (
-      !apiKeySecretPair.apiKey ||
-      !apiKeySecretPair.apiSecret ||
-      !apiKeySecretPair.ex
-    ) {
+    if (!apiKeySecretPair.apiKey || !apiKeySecretPair.apiSecret || !apiKeySecretPair.ex) {
       alert("Please fill all fields");
       return;
     }
@@ -71,7 +67,7 @@ export const AddApiKey = (props) => {
       pairs = [apiKeySecretPair];
     }
     await chrome.storage.sync.set({
-      apiKeySecretPairs: pairs,
+      apiKeySecretPairs: pairs
     });
 
     //  clean up tmp values in storage
@@ -92,21 +88,13 @@ export const AddApiKey = (props) => {
       <Stack spacing={3}>
         <HStack spacing="8px">
           <Menu>
-            <MenuButton
-              minWidth={"unset"}
-              as={Button}
-              rightIcon={<FaChevronDown />}
-            >
+            <MenuButton minWidth={"unset"} as={Button} rightIcon={<FaChevronDown />}>
               Select
             </MenuButton>
             <MenuList>
               {exchanges.map((ex, index) => {
                 return (
-                  <MenuItem
-                    key={index}
-                    id={ex.id}
-                    onClick={() => handleUpdateApiKey({ ex })}
-                  >
+                  <MenuItem key={index} id={ex.id} onClick={() => handleUpdateApiKey({ ex })}>
                     {ex.text}
                   </MenuItem>
                 );
@@ -126,29 +114,24 @@ export const AddApiKey = (props) => {
           placeholder="API key"
           size="md"
           value={apiKeySecretPair.apiKey || ""}
-          onChange={(evt) =>
-            handleUpdateApiKey({ apiKey: evt.target.value.trim() })
-          }
+          onChange={(evt) => handleUpdateApiKey({ apiKey: evt.target.value.trim() })}
         />
         <Input
           placeholder="API secret"
           size="md"
           value={apiKeySecretPair.apiSecret || ""}
-          onChange={(evt) =>
-            handleUpdateApiKey({ apiSecret: evt.target.value.trim() })
-          }
+          onChange={(evt) => handleUpdateApiKey({ apiSecret: evt.target.value.trim() })}
         />
       </Stack>
 
       <Box mt={3} p={5} shadow="md" borderWidth="1px">
         <Heading fontSize="xl">Security Warning</Heading>
         <Text mt={4}>
-          Please make sure the access of your API key is restricted as read-only
-          or can-read, nothing more.
+          Please make sure the access of your API key is restricted as read-only or can-read,
+          nothing more.
         </Text>
         <Text mt={4}>
-          You should not be able to buy/sell cryptocurrencies or withdraw money
-          via your API key.
+          You should not be able to buy/sell cryptocurrencies or withdraw money via your API key.
         </Text>
       </Box>
       <Button mt={3} colorScheme="blue" onClick={handleSubmit}>
@@ -156,4 +139,4 @@ export const AddApiKey = (props) => {
       </Button>
     </Flex>
   );
-};;
+};

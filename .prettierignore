@@ -1,1 +1,7 @@
-src/components/Account/AccountFooter.jsx
+.parcel-cache
+.vscode
+dist
+node_modules
+
+
+.eslintrc.js

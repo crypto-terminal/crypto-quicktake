@@ -1,34 +1,34 @@
 export const exchanges = [
   {
     id: "binance_us",
-    text: "Binance US",
+    text: "Binance US"
   },
   {
     id: "okcoin",
-    text: "OKCoin",
+    text: "OKCoin"
   },
   {
     id: "okx",
-    text: "OKX",
+    text: "OKX"
   },
   {
     id: "gemini",
-    text: "Gemini",
+    text: "Gemini"
   },
   {
     id: "coinbase",
-    text: "Coinbase",
+    text: "Coinbase"
   },
   {
     id: "kraken",
-    text: "Kraken",
+    text: "Kraken"
   },
   {
     id: "bitmart",
-    text: "BitMart",
+    text: "BitMart"
   },
   {
     id: "kucoin",
-    text: "KuCoin",
-  },
+    text: "KuCoin"
+  }
 ];
